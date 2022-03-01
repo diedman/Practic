@@ -10,11 +10,10 @@
     <string name="registration_first_name">Имя*</string>
     <string name="registration_last_name">Фамилия*</string>
     <string name="registration_gender">Пол*</string>
+    <string name="registration_marital_status">Семейный статус*</string>
     <string name="registration_birth_date">Дата рождения*</string>
     <string name="registration_phone_number">Телефон</string>
     <string name="registration_family_status">Семейное положение*</string>
-    <string name="registration_married">Замужем/Женат</string>
-    <string name="registration_not_married">Незамужем/Неженат</string>
     <string name="registration_agreement_personal_data">Согласие на обработку персональных данных*</string>
     <string name="registration_agreement_participation">Cогласие на условия участия в проекте и получение уведомлений на e-mail*</string>
 

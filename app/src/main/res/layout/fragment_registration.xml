@@ -37,14 +37,16 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.02">
+            app:layout_constraintVertical_bias="0.01"
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_Email"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_email"
-                android:textSize="20sp" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,19 +58,22 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:background="@color/white"
+            app:endIconMode="password_toggle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.12">
+            app:layout_constraintVertical_bias="0.10"
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_Password"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_password"
-                android:textSize="20sp" />
+                android:inputType="textPassword"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -84,14 +89,15 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.22">
+            app:layout_constraintVertical_bias="0.19"
+            app:startIconDrawable="@drawable/ic_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_First_Name"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_first_name"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -107,14 +113,15 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.32">
+            app:layout_constraintVertical_bias="0.28"
+            app:startIconDrawable="@drawable/ic_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_Last_Name"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_last_name"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -125,19 +132,23 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:background="@color/white"
+            app:endIconDrawable="@drawable/ic_date"
+            app:endIconMode="custom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.52">
+            app:layout_constraintVertical_bias="0.37"
+            app:startIconDrawable="@drawable/ic_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_Birth_Date"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_birth_date"
-                android:textSize="20sp" />
+                android:inputType="date"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -154,14 +165,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.62">
+            app:layout_constraintVertical_bias="0.46"
+            app:startIconDrawable="@drawable/ic_phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_Phone"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_phone_number"
-                android:textSize="20sp" />
+                android:inputType="phone"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -177,22 +190,48 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.42">
+            app:layout_constraintVertical_bias="0.55"
+            app:startIconDrawable="@drawable/ic_gender">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_Gender"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:hint="@string/registration_gender"
                 android:inputType="none"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/menu_Marital_Status"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintVertical_bias="0.64"
+            app:startIconDrawable="@drawable/ic_marital_status">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView_Marital_Status"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/registration_marital_status"
+                android:inputType="none"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/materialCheckBox_Agreement_Data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:text="@string/registration_agreement_personal_data"
@@ -201,14 +240,14 @@
             app:layout_constraintHorizontal_bias="0.235"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.7">
+            app:layout_constraintVertical_bias="0.715">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/materialCheckBox_Agreement_Participation"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:text="@string/registration_agreement_participation"
@@ -217,7 +256,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.77">
+            app:layout_constraintVertical_bias="0.777">
 
         </com.google.android.material.checkbox.MaterialCheckBox>
 
@@ -227,6 +266,7 @@
             android:layout_width="306dp"
             android:layout_height="58dp"
             android:backgroundTint="@color/pink"
+            android:clickable="true"
             android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -240,8 +280,9 @@
 
         <TextView
             android:id="@+id/textView_Forgot_Password"
-            android:layout_width="226dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:clickable="true"
             android:gravity="center"
             android:text="@string/forgot_password"
             android:textColor="@color/pink"
@@ -251,12 +292,13 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.90" />
+            app:layout_constraintVertical_bias="0.92" />
 
         <TextView
-            android:id="@+id/textView_Already_Have_Account"
-            android:layout_width="380dp"
+            android:id="@+id/textView_SignUp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
+            android:clickable="true"
             android:gravity="center"
             android:text="@string/already_have_account"
             android:textColor="@color/pink"
@@ -266,7 +308,7 @@
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.985" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
