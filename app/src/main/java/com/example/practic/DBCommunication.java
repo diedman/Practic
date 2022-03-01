@@ -12,6 +12,24 @@ import java.util.List;
 public class DBCommunication {
     private static Connection conn = DBUtil.getConnection();
 
+    public static int ifCoworkerExists(String email) {
+        int res = 0;
+        try {
+            String query = "SELECT * FROM coworkers WHERE email = ?;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) { res = 1; } else { res = -1; }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public static boolean registerCoworker(String firstname,
                                         String lastName,
                                         String patronymic,
@@ -19,8 +37,12 @@ public class DBCommunication {
                                         Date birthday,
                                         String email,
                                         String phoneNum,
-                                        int idMaritalStatus) {
+                                        String maritalStatus) {
         try {
+            if (ifCoworkerExists(email) == 1) { return false; }
+
+            int idMaritalStatus = getMaritalStatusId(maritalStatus);
+
             String query = "INSERT INTO coworkers (firstname, lastname, patronymic, hashed_password, salt, birthday, email, phone_num, id_marital_status) \n" +
                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
@@ -30,10 +52,10 @@ public class DBCommunication {
             stmt.setString(2, lastName);
             stmt.setString(3, patronymic);
             stmt.setString(4, password);
-            stmt.setDate(  4, birthday);
+            stmt.setDate(4, birthday);
             stmt.setString(5, email);
             stmt.setString(6, phoneNum);
-            stmt.setInt(   7, idMaritalStatus);
+            stmt.setInt(7, idMaritalStatus);
 
             stmt.executeUpdate();
 
@@ -80,6 +102,41 @@ public class DBCommunication {
             return false;
         }
         return true;
+    }
+
+    public static boolean authenticateUser(String email, String password) {
+        try {
+            String query = "SELECT coworkers.id, coworkers.firstname, coworkers.lastname, " +
+                           "coworkers.patronymic, coworkers.hashed_password, coworkers.birthday, " +
+                           "coworkers.email, coworkers.phone_num, marital_statuses.title \n" +
+                           "FROM coworkers, marital_statuses \n" +
+                           "WHERE coworkers.email = ? " +
+                           "AND coworkers.id_marital_status = marital_statuses.id;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                CoworkerData.id             = rs.getInt(1);
+                CoworkerData.firstname      = rs.getString(2);
+                CoworkerData.lastname       = rs.getString(3);
+                CoworkerData.patronymic     = rs.getString(4);
+                CoworkerData.hashedPassword = rs.getString(5);
+                CoworkerData.birthday       = rs.getDate(6);
+                CoworkerData.email          = rs.getString(7);
+                CoworkerData.phoneNum       = rs.getString(8);
+                CoworkerData.maritalStatus  = rs.getString(9);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static List<CoworkingSpace> getCoworkingSpaces() {
@@ -150,5 +207,23 @@ public class DBCommunication {
             e.printStackTrace();
         }
         return eventQR;
+    }
+
+    private static int getMaritalStatusId(String maritalStatus) {
+        int id = -1;
+        try {
+            String query = "SELECT id FROM marital_statuses WHERE title = ?;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, maritalStatus);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) { id = rs.getInt(1); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }
