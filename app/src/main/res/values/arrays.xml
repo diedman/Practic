@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="genders">
+        <item>Мужской</item>
+        <item>Женский</item>
+    </array>
+
+    <array name="marital_status">
+        <item>Незамужем/Неженат</item>
+        <item>Замужем/Женат</item>
+    </array>
+</resources>
