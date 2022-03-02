@@ -7,7 +7,6 @@ public class CoworkerData {
     public static String firstname;
     public static String lastname;
     public static String patronymic;
-    public static String hashedPassword;
     public static Date birthday;
     public static String email;
     public static String phoneNum;

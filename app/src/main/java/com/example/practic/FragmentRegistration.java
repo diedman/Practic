@@ -40,8 +40,8 @@ public class FragmentRegistration extends Fragment {
 
     private void initFields(View thisView) {
         tvForgotPassword  = thisView.findViewById(R.id.textView_Forgot_Password);
-        tvSignIn          = thisView.findViewById(R.id.textView_SignUp);
-        btnSignUp         = thisView.findViewById(R.id.button_SignIn);
+        tvSignIn          = thisView.findViewById(R.id.textView_SignIn);
+        btnSignUp         = thisView.findViewById(R.id.button_SignUp);
         menuGender        = thisView.findViewById(R.id.autoCompleteTextView_Gender);
         menuMaritalStatus = thisView.findViewById(R.id.autoCompleteTextView_Marital_Status);
         tilBirthDate      = thisView.findViewById(R.id.outlinedTextField_Birth_Date);

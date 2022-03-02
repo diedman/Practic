@@ -28,8 +28,8 @@ public class FragmentLogin extends Fragment {
 
     private void initFields(View thisView) {
         tvForgotPassword = thisView.findViewById(R.id.textView_Forgot_Password);
-        tvSignUp = thisView.findViewById(R.id.textView_SignUp);
-        btnSignIn = thisView.findViewById(R.id.button_SignIn);
+        tvSignUp = thisView.findViewById(R.id.textView_SignIn);
+        btnSignIn = thisView.findViewById(R.id.button_SignUp);
     }
 
     private void initAdapters() {

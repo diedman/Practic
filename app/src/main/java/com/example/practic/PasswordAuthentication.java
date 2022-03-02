@@ -52,7 +52,7 @@ public final class PasswordAuthentication
     }
 
     public static boolean authenticate(String password, String hashedOriginal) {
-        String salt = hashedOriginal.substring(0, hashedOriginal.indexOf(":"));
+        String salt = hashedOriginal.substring(0, hashedOriginal.indexOf(":") - 1);
 
         return getHashedPassword(password, salt).equals(hashedOriginal);
     }

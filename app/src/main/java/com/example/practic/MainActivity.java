@@ -12,6 +12,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
@@ -26,8 +29,5 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragmentContainerView, new FragmentLogin())
                     .commit();
         }
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 }

@@ -30,7 +30,7 @@ public class DBCommunication {
         return res;
     }
 
-    public static boolean registerCoworker(String firstname,
+    public static int registerCoworker(String firstname,
                                         String lastName,
                                         String patronymic,
                                         String password,
@@ -38,35 +38,39 @@ public class DBCommunication {
                                         String email,
                                         String phoneNum,
                                         String maritalStatus) {
+        int res = -1;
         try {
-            if (ifCoworkerExists(email) == 1) { return false; }
+            if (ifCoworkerExists(email) == 1) { return 0; }
 
             int idMaritalStatus = getMaritalStatusId(maritalStatus);
 
             String query = "INSERT INTO coworkers (firstname, lastname, patronymic, hashed_password, salt, birthday, email, phone_num, id_marital_status) \n" +
                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+            String hashedPassword = PasswordAuthentication.getHashedPassword(password);
+
             PreparedStatement stmt = conn.prepareStatement(query);
 
             stmt.setString(1, firstname);
             stmt.setString(2, lastName);
             stmt.setString(3, patronymic);
-            stmt.setString(4, password);
+            stmt.setString(4, hashedPassword);
             stmt.setDate(4, birthday);
             stmt.setString(5, email);
             stmt.setString(6, phoneNum);
             stmt.setInt(7, idMaritalStatus);
 
             stmt.executeUpdate();
+            res = 1;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return res;
     }
 
-    public static boolean registerToCoworking(int idSpace, int idCoworker, String qr) {
+    public static int registerToCoworking(int idSpace, int idCoworker, String qr) {
+        int res = -1;
         try {
             String query = "INSERT INTO coworkers_spaces (id_space, id_coworker, qr) \n" +
                     "VALUES (?, ?, ?);";
@@ -78,11 +82,11 @@ public class DBCommunication {
             stmt.setString(3, qr);
 
             stmt.executeUpdate();
+            res = 1;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return res;
     }
 
     public static boolean registerToEvent(int idEvent, int idCoworker, String qr) {
@@ -104,7 +108,8 @@ public class DBCommunication {
         return true;
     }
 
-    public static boolean authenticateUser(String email, String password) {
+    public static int authenticateUser(String email, String password) {
+        int res = -1;
         try {
             String query = "SELECT coworkers.id, coworkers.firstname, coworkers.lastname, " +
                            "coworkers.patronymic, coworkers.hashed_password, coworkers.birthday, " +
@@ -124,19 +129,20 @@ public class DBCommunication {
                 CoworkerData.firstname      = rs.getString(2);
                 CoworkerData.lastname       = rs.getString(3);
                 CoworkerData.patronymic     = rs.getString(4);
-                CoworkerData.hashedPassword = rs.getString(5);
+                String hashedPassword       = rs.getString(5);
                 CoworkerData.birthday       = rs.getDate(6);
                 CoworkerData.email          = rs.getString(7);
                 CoworkerData.phoneNum       = rs.getString(8);
                 CoworkerData.maritalStatus  = rs.getString(9);
-                return true;
+
+                res = PasswordAuthentication.authenticate(password, hashedPassword) ? 1 : 0;
             } else {
-                return false;
+                res = 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return res;
     }
 
     public static List<CoworkingSpace> getCoworkingSpaces() {
@@ -148,13 +154,42 @@ public class DBCommunication {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int    id       = rs.getInt(1);
-                String title    = rs.getString(2);
+                int id = rs.getInt(1);
+                String title = rs.getString(2);
                 String locality = rs.getString(3);
 
                 double[] coords = Arrays.stream(locality.split(":"))
-                                    .mapToDouble(Double::parseDouble)
-                                    .toArray();
+                        .mapToDouble(Double::parseDouble)
+                        .toArray();
+
+                spaces.add(new CoworkingSpace(id, title, coords[0], coords[1]));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return spaces;
+    }
+
+    public static List<CoworkingSpace> getSpacesOfCoworker(int coworkerId) {
+        List<CoworkingSpace> spaces = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM spaces WHERE id IN (\n" +
+                    "SELECT id_space FROM coworkers_spaces WHERE id_coworker = ?\n" +
+                    ");";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, coworkerId);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String title = rs.getString(2);
+                String locality = rs.getString(3);
+
+                double[] coords = Arrays.stream(locality.split(":"))
+                        .mapToDouble(Double::parseDouble)
+                        .toArray();
 
                 spaces.add(new CoworkingSpace(id, title, coords[0], coords[1]));
             }
@@ -172,6 +207,32 @@ public class DBCommunication {
             PreparedStatement stmt = conn.prepareStatement(query);
 
             stmt.setInt(1, idCoworkingSpace);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int    id    = rs.getInt(1);
+                String title = rs.getString(2);
+                String theme = rs.getString(3);
+                Date   date  = rs.getDate(4);
+
+                events.add(new Event(id, title, theme, date));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return events;
+    }
+
+    public static List<Event> getEventsOfCoworker(int coworkerId) {
+        List<Event> events = new ArrayList<>();
+        try {
+            String query = "SELECT id, title, theme, meeting_date FROM events WHERE id IN (\n" +
+                    "SELECT id_event FROM coworkers_events WHERE id_coworker = ?" +
+                    "\n);";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, coworkerId);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
