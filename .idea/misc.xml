@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/activity_main.xml" value="0.483695652173913" />
-        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_login.xml" value="0.33" />
-        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_registration.xml" value="0.33" />
+        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_login.xml" value="0.5" />
+        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_registration.xml" value="0.5" />
+        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_registration_coworking_space.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/Sinus/Desktop/Practic/app/src/main/res/layout/fragment_registration_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.4" />
@@ -21,7 +23,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.33" />
+        <option name="scale" value="0.5" />
       </ProjectState>
     </option>
   </component>

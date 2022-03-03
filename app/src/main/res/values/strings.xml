@@ -24,5 +24,11 @@
     <string name="forgot_password">Забыли свой пароль?</string>
     <string name="already_have_account">Уже есть аккаунт? Войдите вместо регистрации!</string>
 
+    <string name="date">Дата:</string>
+    <string name="place">Место:</string>
+    <string name="speaker">Спикер:</string>
+    <string name="description">Описание</string>
+    <string name="registration_event">Записаться на мероприятие</string>
+
 
 </resources>

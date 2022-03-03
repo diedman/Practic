@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentRegistrationEvent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_gray">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView_Speaker_Information"
+            android:layout_width="240dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="Speaker"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.861" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView_Speaker"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="@string/speaker"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.861" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CardView_Event_Information"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:cardBackgroundColor="@color/pink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_Place_Information"
+                android:layout_width="240dp"
+                android:layout_height="45dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="140dp"
+                android:layout_marginEnd="16dp"
+                android:autoSizeMaxTextSize="24dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Event Place"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_Date"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center|end"
+                android:text="@string/date"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_Name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:text="Event Name"
+                android:textColor="@color/white"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_Place"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="140dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center|end"
+                android:text="@string/place"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_Date_Information"
+                android:layout_width="240dp"
+                android:layout_height="45dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="16dp"
+                android:autoSizeMaxTextSize="24dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center|center_vertical"
+                android:text="Event Date"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/imageView_Date"
+                android:layout_width="40dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/ic_date_white" />
+
+            <ImageView
+                android:id="@+id/imageView_Place"
+                android:layout_width="40dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="140dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_place_white" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView_Description"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CardView_Event_Information"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ScrollView
+            android:id="@+id/scrollView_Description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/textView_Speaker_Information"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_Description"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/textView_Description_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription TestDescription "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_SignUp"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="270dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/pink"
+            android:clickable="true"
+            android:text="@string/registration_event"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:strokeColor="@color/pink" />
+
+        <ImageView
+            android:id="@+id/imageView_Speaker"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_speaker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.861"
+            app:tint="@color/gray" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
