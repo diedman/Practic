@@ -6,7 +6,7 @@
 
     <string name="registration_required_fields">*Поля, обязательные для заполнения.</string>
     <string name="registration_email">Email*</string>
-    <string name="registration_password">Пароль* (От 6 символов) </string>
+    <string name="registration_password">Пароль* (От 6 символов)</string>
     <string name="registration_first_name">Имя*</string>
     <string name="registration_last_name">Фамилия*</string>
     <string name="registration_gender">Пол*</string>
@@ -30,5 +30,9 @@
     <string name="description">Описание</string>
     <string name="registration_event">Записаться на мероприятие</string>
 
+
+    <string name="news_lent">Лента</string>
+    <string name="coworking">Коворкинг</string>
+    <string name="personal_area">Личный кабинет</string>
 
 </resources>

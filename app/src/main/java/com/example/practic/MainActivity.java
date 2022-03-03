@@ -3,8 +3,11 @@ package com.example.practic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,5 +32,12 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragmentContainerView, new FragmentLogin())
                     .commit();
         }
+
+    }
+
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fl_content, fragment);
+        ft.commit();
     }
 }
