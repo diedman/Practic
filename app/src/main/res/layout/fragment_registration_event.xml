@@ -136,7 +136,8 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="80dp"
-                android:src="@drawable/ic_date_white" />
+                android:src="@drawable/ic_date"
+                app:tint="@color/white" />
 
             <ImageView
                 android:id="@+id/imageView_Place"
@@ -145,7 +146,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="140dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_place_white" />
+                android:src="@drawable/ic_place"
+                app:tint="@color/white" />
 
         </androidx.cardview.widget.CardView>
 
