@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         if (!hasVisited) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentContainerView, new FragmentRegistrationCoworkingSpace())
+                    .replace(R.id.fragmentContainerView, new FragmentRegistration())
                     .commit();
         } else {
             getSupportFragmentManager()

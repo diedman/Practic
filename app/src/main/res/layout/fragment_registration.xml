@@ -261,7 +261,7 @@
         </com.google.android.material.checkbox.MaterialCheckBox>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_Time_Start"
+            android:id="@+id/button_SingUp"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="306dp"
             android:layout_height="58dp"
