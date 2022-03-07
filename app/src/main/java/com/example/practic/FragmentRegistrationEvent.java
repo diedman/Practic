@@ -13,8 +13,8 @@ public class FragmentRegistrationEvent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View thisView = inflater.inflate(R.layout.fragment_registration_event, container, false);
+
         return thisView;
     }
 }

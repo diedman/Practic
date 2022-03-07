@@ -195,7 +195,7 @@
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_SignUp"
+            android:id="@+id/button_Time_Start"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="270dp"
             android:layout_height="70dp"

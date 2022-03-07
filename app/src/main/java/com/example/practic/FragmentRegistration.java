@@ -41,11 +41,11 @@ public class FragmentRegistration extends Fragment {
     private void initFields(View thisView) {
         tvForgotPassword  = thisView.findViewById(R.id.textView_Forgot_Password);
         tvSignIn          = thisView.findViewById(R.id.textView_SignIn);
-        btnSignUp         = thisView.findViewById(R.id.button_SignUp);
+        btnSignUp         = thisView.findViewById(R.id.button_Time_Start);
         menuGender        = thisView.findViewById(R.id.autoCompleteTextView_Gender);
         menuMaritalStatus = thisView.findViewById(R.id.autoCompleteTextView_Marital_Status);
-        tilBirthDate      = thisView.findViewById(R.id.outlinedTextField_Birth_Date);
-        edtBirthDate      = thisView.findViewById(R.id.editText_Birth_Date);
+        tilBirthDate      = thisView.findViewById(R.id.outlinedTextField_Date);
+        edtBirthDate      = thisView.findViewById(R.id.editText_Date);
     }
 
     private void initAdapters(View thisView) {

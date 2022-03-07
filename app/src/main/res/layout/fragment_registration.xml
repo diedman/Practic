@@ -125,7 +125,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField_Birth_Date"
+            android:id="@+id/outlinedTextField_Date"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
             app:startIconDrawable="@drawable/ic_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_Birth_Date"
+                android:id="@+id/editText_Date"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/registration_birth_date"
@@ -261,7 +261,7 @@
         </com.google.android.material.checkbox.MaterialCheckBox>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_SignUp"
+            android:id="@+id/button_Time_Start"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="306dp"
             android:layout_height="58dp"
