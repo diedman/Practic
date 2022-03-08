@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class DatabaseAPITest {
-    private static Connection conn = DBUtil.changeDatabase("TestPractic");
+    private static Connection conn;
 
     private static void clearTable(String tableName) {
         try {
             String query = "DELETE FROM " + tableName + ";";
+            conn = DBUtil.changeDatabase("TestPractic");
             conn.prepareStatement(query).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,13 +42,15 @@ public class DatabaseAPITest {
         }
         String email         = "some@mail.ru";
         String phoneNum      = "88005553535";
+        String sex = "мужской";
         String maritalStatus = "не замужем/не женат";
 
         DBCommunication.registerCoworker(firstname, lastName, patronymic, password,
-                birthday, email, phoneNum, maritalStatus);
+                birthday, email, phoneNum, sex, maritalStatus);
 
         try {
             String query = "SELECT id FROM coworkers WHERE email = ?;";
+            conn = DBUtil.changeDatabase("TestPractic");
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
@@ -104,19 +107,21 @@ public class DatabaseAPITest {
         }
         String email         = "some";
         String phoneNum      = "88005553535";
-        String maritalStatus = "не замужем/не женат";
+        String sex = "мужской";
+        String maritalStatus = "Незамужем/Неженат";
 
         assertEquals(DBCommunication.registerCoworker(firstname, lastName, patronymic, password,
-                birthday, email, phoneNum, maritalStatus), 1);
+                birthday, email, phoneNum, sex, maritalStatus), 1);
 
         patronymic = null;
         email = "someanother";
 
         assertEquals(DBCommunication.registerCoworker(firstname, lastName, patronymic, password,
-                birthday, email, phoneNum, maritalStatus), 1);
+                birthday, email, phoneNum, sex, maritalStatus), 1);
 
         assertEquals(DBCommunication.registerCoworker(firstname, lastName, patronymic, password,
-                birthday, email, phoneNum, maritalStatus), 0);
+                birthday, email, phoneNum, sex, maritalStatus), 0);
+        clearTable("coworkers");
     }
 
     @Test

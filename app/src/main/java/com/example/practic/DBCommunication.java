@@ -44,6 +44,7 @@ public class DBCommunication {
                                        Date birthday,
                                        String email,
                                        String phoneNum,
+                                       String sex,
                                        String maritalStatus) {
         int res = -1;
 
@@ -56,8 +57,8 @@ public class DBCommunication {
                 return -1;
             }
 
-            String query = "INSERT INTO coworkers (firstname, lastname, patronymic, hashed_password, birthday, email, phone_num, id_marital_status) \n" +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO coworkers (firstname, lastname, patronymic, hashed_password, birthday, email, phone_num, sex, id_marital_status) \n" +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
             String hashedPassword = PasswordAuthentication.getHashedPassword(password);
 
@@ -70,7 +71,8 @@ public class DBCommunication {
             stmt.setDate(5, birthday);
             stmt.setString(6, email);
             stmt.setString(7, phoneNum);
-            stmt.setInt(8, idMaritalStatus);
+            stmt.setString(8, sex);
+            stmt.setInt(9, idMaritalStatus);
 
             stmt.executeUpdate();
             res = 1;
@@ -168,7 +170,7 @@ public class DBCommunication {
         try {
             String query = "SELECT coworkers.id, coworkers.firstname, coworkers.lastname, " +
                            "coworkers.patronymic, coworkers.hashed_password, coworkers.birthday, " +
-                           "coworkers.email, coworkers.phone_num, marital_statuses.title \n" +
+                           "coworkers.email, coworkers.phone_num, coworkers.sex, marital_statuses.title \n" +
                            "FROM coworkers, marital_statuses \n" +
                            "WHERE coworkers.email = ? " +
                            "AND coworkers.id_marital_status = marital_statuses.id;";
@@ -188,7 +190,8 @@ public class DBCommunication {
                 CoworkerData.birthday       = rs.getDate(6);
                 CoworkerData.email          = rs.getString(7);
                 CoworkerData.phoneNum       = rs.getString(8);
-                CoworkerData.maritalStatus  = rs.getString(9);
+                CoworkerData.sex            = rs.getString(9);
+                CoworkerData.maritalStatus  = rs.getString(10);
 
                 res = PasswordAuthentication.authenticate(password, hashedPassword) ? 1 : 0;
             } else {
