@@ -8,7 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class LentaAdapter extends
             image = (ImageView) itemView.findViewById(R.id.imageview_lentimage);
             titleTextView = (TextView) itemView.findViewById(R.id.text_title);
             dateTextView = (TextView) itemView.findViewById(R.id.text_date);
+
         }
     }
 
@@ -56,6 +61,13 @@ public class LentaAdapter extends
         image.setImageResource(lenta.getId_picture());
         tittle.setText(lenta.getTittle());
         date.setText(lenta.getDate());
+
+        holder.image.setOnClickListener(view -> {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            FragmentRegistrationEvent myFragment = new FragmentRegistrationEvent();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, myFragment).addToBackStack(null).commit();
+
+        });
     }
 
     @Override

@@ -27,7 +27,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.861" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView_Speaker"
@@ -45,7 +45,7 @@
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.861" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/CardView_Event_Information"
@@ -210,7 +210,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.92"
             app:strokeColor="@color/pink" />
 
         <ImageView
@@ -225,7 +225,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.861"
+            app:layout_constraintVertical_bias="0.8"
             app:tint="@color/gray" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
