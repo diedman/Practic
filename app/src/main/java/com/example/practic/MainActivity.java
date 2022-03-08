@@ -3,11 +3,15 @@ package com.example.practic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.fragmentContainerView, new FragmentRegistration())
                     .commit();
+
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -33,11 +38,31 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.page_news:
+                            loadFragment(new FragmentLenta());
+                            break;
+                        case R.id.page_coworking:
+                            loadFragment(new FragmentRegistrationCoworkingSpace());
+                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            break;
+                        case R.id.page_personalArea:
+                            loadFragment(new FragmentAccount());
+                            break;
+                    }
+                    return false;
+                });
     }
 
     private void loadFragment(Fragment fragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_content, fragment);
+        ft.replace(R.id.fragmentContainerView, fragment);
         ft.commit();
     }
 }
