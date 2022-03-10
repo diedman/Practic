@@ -49,8 +49,8 @@ public class FragmentRegistration extends Fragment {
         edtPassword       = thisView.findViewById(R.id.editText_Password);
         edtFirstname      = thisView.findViewById(R.id.editText_First_Name);
         edtLastname       = thisView.findViewById(R.id.editText_Last_Name);
-        tilBirthDate      = thisView.findViewById(R.id.menu_Gender);
-        edtBirthDate      = thisView.findViewById(R.id.editText_Date);
+        tilBirthDate      = thisView.findViewById(R.id.outlinedTextField_Birthday);
+        edtBirthDate      = thisView.findViewById(R.id.editText_Birthday);
         edtPhoneNum       = thisView.findViewById(R.id.editText_Phone);
         menuGender        = thisView.findViewById(R.id.autoCompleteTextView_Gender);
         menuMaritalStatus = thisView.findViewById(R.id.autoCompleteTextView_Marital_Status);
