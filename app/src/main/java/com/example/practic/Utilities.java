@@ -1,6 +1,7 @@
 package com.example.practic;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 
 public class Utilities {
     static final byte[] HEX_SET = "0123456789abcdef".getBytes(StandardCharsets.US_ASCII);
@@ -12,5 +13,12 @@ public class Utilities {
             hexBytes[i * 2 + 1] = HEX_SET[v & 0x0F];
         }
         return new String(hexBytes, StandardCharsets.UTF_8);
+    }
+
+    public static String getRandomHexStr(int bytesLen) {
+        Random rnd = new Random();
+        byte[] bytes = new byte[bytesLen];
+        rnd.nextBytes(bytes);
+        return bytesToHexStr(bytes);
     }
 }

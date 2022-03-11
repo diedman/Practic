@@ -262,23 +262,22 @@ public class DBCommunication {
         return spaces;
     }
 
-    public static List<Event> getCoworkingEvents(int idCoworkingSpace) {
-        List<Event> events = new ArrayList<>();
+    public static List<EventData> getEvents() {
+        List<EventData> events = new ArrayList<>();
         try {
-            String query = "SELECT id, title, theme, meeting_date FROM events WHERE id_space = ?;";
+            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events;";
 
             PreparedStatement stmt = conn.prepareStatement(query);
 
-            stmt.setInt(1, idCoworkingSpace);
-
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int    id    = rs.getInt(1);
-                String title = rs.getString(2);
-                String theme = rs.getString(3);
-                Date   date  = rs.getDate(4);
+                int    id         = rs.getInt(1);
+                String title      = rs.getString(2);
+                String eventDescr = rs.getString(3);
+                Date   date       = rs.getDate(4);
+                String speaker    = rs.getString(5);
 
-                events.add(new Event(id, title, theme, date));
+                events.add(new EventData(id, title, eventDescr, date, speaker));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -286,10 +285,35 @@ public class DBCommunication {
         return events;
     }
 
-    public static List<Event> getEventsOfCoworker(int coworkerId) {
-        List<Event> events = new ArrayList<>();
+    public static List<EventData> getCoworkingEvents(int idCoworkingSpace) {
+        List<EventData> events = new ArrayList<>();
         try {
-            String query = "SELECT id, title, theme, meeting_date FROM events WHERE id IN (\n" +
+            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events WHERE id_space = ?;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, idCoworkingSpace);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int    id         = rs.getInt(1);
+                String title      = rs.getString(2);
+                String eventDescr = rs.getString(3);
+                Date   date       = rs.getDate(4);
+                String speaker    = rs.getString(5);
+
+                events.add(new EventData(id, title, eventDescr, date, speaker));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return events;
+    }
+
+    public static List<EventData> getEventsOfCoworker(int coworkerId) {
+        List<EventData> events = new ArrayList<>();
+        try {
+            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events WHERE id IN (\n" +
                     "SELECT id_event FROM coworkers_events WHERE id_coworker = ?" +
                     "\n);";
 
@@ -299,12 +323,13 @@ public class DBCommunication {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int    id    = rs.getInt(1);
-                String title = rs.getString(2);
-                String theme = rs.getString(3);
-                Date   date  = rs.getDate(4);
+                int    id         = rs.getInt(1);
+                String title      = rs.getString(2);
+                String eventDescr = rs.getString(3);
+                Date   date       = rs.getDate(4);
+                String speaker    = rs.getString(5);
 
-                events.add(new Event(id, title, theme, date));
+                events.add(new EventData(id, title, eventDescr, date, speaker));
             }
         } catch (SQLException e) {
             e.printStackTrace();

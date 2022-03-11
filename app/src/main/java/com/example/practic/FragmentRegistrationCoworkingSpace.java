@@ -4,14 +4,13 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,10 +24,6 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
     DatePickerDialog.OnDateSetListener dateSetListener;
     TextInputLayout tilDate;
     EditText edtDate;
-
-    public static FragmentRegistrationCoworkingSpace newInstance() {
-        return new FragmentRegistrationCoworkingSpace();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,11 +83,11 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
             builder.setTitle(getString(R.string.coworking_equipment_ask));
 
-            // TODO: Подавать значения из базы
-            String[] testData = {"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
+            String[] tools = (String[]) DBCommunication.getTools().toArray();
+            //String[] testData = {"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
             boolean[] checkedItems = {false, false, false, false, false};
 
-            builder.setMultiChoiceItems(testData, checkedItems,
+            builder.setMultiChoiceItems(tools, checkedItems,
                     (dialogInterface, item, isChecked) -> {
 
                     });

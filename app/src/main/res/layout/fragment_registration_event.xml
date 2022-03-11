@@ -12,7 +12,7 @@
         android:background="@color/light_gray">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView_Speaker_Information"
+            android:id="@+id/textView_reg_event_speaker"
             android:layout_width="240dp"
             android:layout_height="45dp"
             android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textView_Place_Information"
+                android:id="@+id/textView_reg_event_place"
                 android:layout_width="240dp"
                 android:layout_height="45dp"
                 android:layout_gravity="end"
@@ -89,7 +89,7 @@
                 android:textStyle="normal" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textView_Name"
+                android:id="@+id/textView_reg_event_name"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
@@ -115,7 +115,7 @@
                 android:textStyle="normal" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textView_Date_Information"
+                android:id="@+id/textView_reg_event_date"
                 android:layout_width="240dp"
                 android:layout_height="45dp"
                 android:layout_gravity="end"
@@ -171,14 +171,14 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ScrollView
-            android:id="@+id/scrollView_Description"
+            android:id="@+id/scrollView_reg_event_description"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:fillViewport="true"
             android:scrollbars="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/textView_Speaker_Information"
+            app:layout_constraintBottom_toTopOf="@+id/textView_reg_event_speaker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
