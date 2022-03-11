@@ -17,11 +17,13 @@ public class FragmentAccount extends Fragment {
     private ExpandableListAdapter ExpAdapter;
     private ExpandableListView PersonalDataList;
 
+    public static FragmentAccount newInstance() {
+        return new FragmentAccount();
+    }
+
     public FragmentAccount() {
         // Required empty public constructor
     }
-
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

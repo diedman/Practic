@@ -28,36 +28,27 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
+
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
-        if (!hasVisited) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, new FragmentRegistration())
-                    .commit();
 
-        } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, new FragmentLogin())
-                    .commit();
-        }
-
+        if (!hasVisited) loadFragment(FragmentRegistration.newInstance());
+        else loadFragment(FragmentLogin.newInstance());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
-                            loadFragment(new FragmentLenta());
+                            loadFragment(FragmentLenta.newInstance());
                             break;
                         case R.id.page_coworking:
-                            loadFragment(new FragmentRegistrationCoworkingSpace());
+                            loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
                             bottomNavigationView.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.page_personalArea:
-                            loadFragment(new FragmentAccount());
+                            loadFragment(FragmentAccount.newInstance());
                             break;
                     }
                     return false;

@@ -26,6 +26,10 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
     TextInputLayout tilDate;
     EditText edtDate;
 
+    public static FragmentRegistrationCoworkingSpace newInstance() {
+        return new FragmentRegistrationCoworkingSpace();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
