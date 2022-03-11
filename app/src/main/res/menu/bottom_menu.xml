@@ -3,16 +3,16 @@
     <item
         android:id="@+id/page_news"
         android:enabled="true"
-        android:icon="@drawable/ic_news_24dp"
+        android:icon="@drawable/ic_news"
         android:title="Лента"/>
     <item
         android:id="@+id/page_coworking"
         android:enabled="true"
-        android:icon="@drawable/ic_lock_24dp"
+        android:icon="@drawable/ic_coworking"
         android:title="Коворкинг"/>
     <item
         android:id="@+id/page_personalArea"
         android:enabled="true"
-        android:icon="@drawable/ic_account_24dp"
+        android:icon="@drawable/ic_account"
         android:title="Личный кабинет"/>
 </menu>

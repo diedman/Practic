@@ -42,10 +42,15 @@
     <string name="coworking_purpose1">Самостоятельная работа</string>
     <string name="coworking_purpose2">Организация собственного досуга (отдых)</string>
     <string name="coworking_purpose3">Самостоятельная работа в рамках Проектной деятельности</string>
-    <string name="coworking_start_time">Время начала</string>
-    <string name="coworking_end_time">Время конца</string>
+    <string name="coworking_start_time">Начало</string>
+    <string name="coworking_end_time">Окончание</string>
 
     <string name="coworking_equipment_ask">Какая техника вам нужна для работы в коворкинге?</string>
     <string name="coworking_equipment_dialog_yes">Далее</string>
     <string name="coworking_equipment_dialog_no">Мне не нужна орг. техника</string>
+
+    <string name="coworking_choose">Коворкинг</string>
+    <string name="coworking_choose_start_time">Выберите время начала</string>
+    <string name="coworking_choose_end_time">Выберите время окончания</string>
+    <string name="coworking_choose_date">Выберите дату</string>
 </resources>

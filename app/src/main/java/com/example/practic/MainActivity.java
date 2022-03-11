@@ -21,39 +21,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
         if (!hasVisited) {
+            //bottomNavigationView.setVisibility(View.GONE);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentContainerView, new FragmentRegistration())
                     .commit();
 
         } else {
+            //bottomNavigationView.setVisibility(View.GONE);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentContainerView, new FragmentLogin())
                     .commit();
         }
 
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
                             loadFragment(new FragmentLenta());
+                            item.setChecked(true);
                             break;
                         case R.id.page_coworking:
                             loadFragment(new FragmentRegistrationCoworkingSpace());
-                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            item.setChecked(true);
                             break;
                         case R.id.page_personalArea:
                             loadFragment(new FragmentAccount());
+                            item.setChecked(true);
                             break;
                     }
                     return false;

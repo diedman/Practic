@@ -64,7 +64,8 @@ public class FragmentRegistration extends Fragment {
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
-        tilBirthDate.setEndIconOnClickListener(view -> {
+
+        edtBirthDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     dateSetListener, year, month, day);

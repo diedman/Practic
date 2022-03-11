@@ -10,21 +10,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class FragmentRegistrationCoworkingSpace extends Fragment {
     int hour, minute;
-    Button btnTimeStart, btnTimeEnd, btnNext;
+    Button btnNext;
     TimePickerDialog.OnTimeSetListener timeSetListener;
     DatePickerDialog.OnDateSetListener dateSetListener;
-    TextInputLayout tilDate;
-    EditText edtDate;
+    EditText edtDate, edtStartTime, edtEndTime;
+    AutoCompleteTextView menuCoworking;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,31 +36,30 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
 
         initFields(thisView);
         initListeners(thisView);
-        setTimeButtonListener(btnTimeStart, thisView);
-        setTimeButtonListener(btnTimeEnd, thisView);
-
+        setTimeListener(edtStartTime, thisView, getString(R.string.coworking_choose_start_time));
+        setTimeListener(edtEndTime, thisView, getString(R.string.coworking_choose_end_time));
 
         return thisView;
     }
 
     private void initFields(View thisView) {
-        btnTimeStart = thisView.findViewById(R.id.button_Time_Start);
-        btnTimeEnd   = thisView.findViewById(R.id.button_Time_End);
-        tilDate      = thisView.findViewById(R.id.outlinedTextField_Date);
-        edtDate      = thisView.findViewById(R.id.editText_Date);
-        btnNext      = thisView.findViewById(R.id.button_Next);
+        edtDate       = thisView.findViewById(R.id.editText_Date);
+        edtStartTime  = thisView.findViewById(R.id.editText_Start_Time);
+        edtEndTime    = thisView.findViewById(R.id.editText_End_Time);
+        btnNext       = thisView.findViewById(R.id.button_Next);
+        menuCoworking = thisView.findViewById(R.id.autoCompleteTextView_Coworking_Registration);
     }
 
-    private void setTimeButtonListener(Button button, View thisView) {
-        button.setOnClickListener(view -> {
+    private void setTimeListener(EditText editText, View thisView, String title) {
+        editText.setOnClickListener(view -> {
 
             timeSetListener = ((timePicker, hour_, minute_) ->
-                    button.setText(String.format(Locale.getDefault(),
+                    editText.setText(String.format(Locale.getDefault(),
                             "%02d:%02d", hour_, minute_)));
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(thisView.getContext(),
                     timeSetListener, hour, minute, true);
-            timePickerDialog.setTitle("");
+            timePickerDialog.setTitle(title);
             timePickerDialog.show();
         });
     }
@@ -67,7 +69,8 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
-        tilDate.setEndIconOnClickListener(view -> {
+
+        edtDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     dateSetListener, year, month, day);
@@ -81,13 +84,12 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         };
 
         btnNext.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext(), R.style.AppCompatAlertDialogStyle);
             builder.setTitle(getString(R.string.coworking_equipment_ask));
 
             // TODO: Подавать значения из базы
             String[] testData = {"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
             boolean[] checkedItems = {false, false, false, false, false};
-
             builder.setMultiChoiceItems(testData, checkedItems,
                     (dialogInterface, item, isChecked) -> {
 
@@ -106,5 +108,20 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
+        //TODO: Подавать значения из базы сюда
+        ArrayList<CoworkerSpace> testArray = new ArrayList<>();
+        testArray.add(new CoworkerSpace(0,"Coworking1",1,1));
+        testArray.add(new CoworkerSpace(1,"Coworking2",1,1));
+
+        //TODO: Если есть идеи, как лучше подавать строку в адаптер, то поправьте
+        ArrayList<String> titles = new ArrayList<>();
+        for (CoworkerSpace space : testArray){
+            titles.add(space.getTitle());
+        }
+
+        ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(thisView.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, titles);
+        menuCoworking.setAdapter(menuAdapter);
     }
 }
