@@ -18,6 +18,10 @@ import java.util.List;
 
 public class FragmentLenta extends Fragment {
 
+    public static FragmentLenta newInstance() {
+        return new FragmentLenta();
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_lenta, container, false);
