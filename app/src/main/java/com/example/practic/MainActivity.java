@@ -3,6 +3,7 @@ package com.example.practic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
-
+        bottomNavigationView.setVisibility(View.INVISIBLE);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
