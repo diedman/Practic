@@ -33,6 +33,10 @@ public class FragmentRegistration extends Fragment {
                     edtLastname, edtBirthDate, edtPhoneNum;
     DatePickerDialog.OnDateSetListener dateSetListener;
 
+    public static FragmentRegistration newInstance() {
+        return new FragmentRegistration();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

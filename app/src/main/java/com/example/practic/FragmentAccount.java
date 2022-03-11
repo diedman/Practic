@@ -17,6 +17,10 @@ public class FragmentAccount extends Fragment {
     private ExpandableListAdapter ExpAdapter;
     private ExpandableListView PersonalDataList;
 
+    public static FragmentAccount newInstance() {
+        return new FragmentAccount();
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account, null);

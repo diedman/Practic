@@ -29,6 +29,10 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
     EditText edtDate, edtStartTime, edtEndTime;
     AutoCompleteTextView menuCoworking;
 
+    public static FragmentRegistrationCoworkingSpace newInstance() {
+        return new FragmentRegistrationCoworkingSpace();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

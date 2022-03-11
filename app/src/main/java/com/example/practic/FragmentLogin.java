@@ -18,6 +18,10 @@ public class FragmentLogin extends Fragment {
     TextView tvForgotPassword, tvSignUp;
     Button btnSignIn;
 
+    public static FragmentLogin newInstance() {
+        return new FragmentLogin();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

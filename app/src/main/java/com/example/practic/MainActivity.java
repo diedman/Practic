@@ -3,6 +3,7 @@ package com.example.practic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,37 +23,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
-        if (!hasVisited) {
-            //bottomNavigationView.setVisibility(View.GONE);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, new FragmentRegistration())
-                    .commit();
+        //bottomNavigationView.setVisibility(View.GONE);
+        if (!hasVisited) loadFragment(FragmentRegistration.newInstance());
+        else loadFragment(FragmentLogin.newInstance());
 
-        } else {
-            //bottomNavigationView.setVisibility(View.GONE);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, new FragmentLogin())
-                    .commit();
-        }
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
-                            loadFragment(new FragmentLenta());
+                            loadFragment(FragmentLenta.newInstance());
                             item.setChecked(true);
                             break;
                         case R.id.page_coworking:
-                            loadFragment(new FragmentRegistrationCoworkingSpace());
+                            loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
                             item.setChecked(true);
                             break;
                         case R.id.page_personalArea:
-                            loadFragment(new FragmentAccount());
+                            loadFragment(FragmentAccount.newInstance());
                             item.setChecked(true);
                             break;
                     }
