@@ -21,10 +21,6 @@ public class FragmentAccount extends Fragment {
         return new FragmentAccount();
     }
 
-    public FragmentAccount() {
-        // Required empty public constructor
-    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account, null);

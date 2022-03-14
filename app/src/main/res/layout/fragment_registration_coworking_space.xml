@@ -11,24 +11,6 @@
         android:layout_height="match_parent"
         android:background="@color/light_gray">
 
-        <TextView
-            android:id="@+id/textView_Coworking_Label"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/pink"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/coworking"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_Next"
             style="?attr/materialButtonOutlinedStyle"
@@ -36,7 +18,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="6dp"
             android:backgroundTint="@color/pink"
             android:clickable="true"
             android:text="@string/next"
@@ -53,24 +35,73 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
-            android:layout_height="303dp"
+            android:layout_height="wrap_content"
             android:background="@android:drawable/dialog_holo_light_frame"
             app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_Coworking_Label"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/textView_Forgot_Password8"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField_End_Time"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginStart="210dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="155dp"
+                android:layout_marginStart="225dp"
+                android:layout_marginTop="138dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                app:startIconDrawable="@drawable/ic_time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_End_Time"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeTextType="none"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/coworking_end_time"
+                    android:inputType="date"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField_Start_Time"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="138dp"
+                android:layout_marginEnd="225dp"
+                android:background="@color/white"
+                app:startIconDrawable="@drawable/ic_time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Start_Time"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeTextType="none"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/coworking_start_time"
+                    android:inputType="date"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="138dp"
+                android:layout_marginEnd="0dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="-"
@@ -83,109 +114,101 @@
                 android:layout_height="50dp"
                 android:layout_gravity="end"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="224dp"
+                android:layout_marginTop="260dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="Free Spaces"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_Spaces_Information"
-                android:layout_width="140dp"
-                android:layout_height="50dp"
+                android:layout_width="143dp"
+                android:layout_height="52dp"
                 android:layout_gravity="end"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="154dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="Spaces"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_Free_Spaces"
                 android:layout_width="140dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="224dp"
+                android:layout_marginTop="260dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/white"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="@string/coworking_free_spaces"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_Spaces"
                 android:layout_width="140dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="154dp"
+                android:layout_marginTop="200dp"
                 android:background="@color/white"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="@string/coworking_spaces"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imageView_Spaces"
                 android:layout_width="35dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_person" />
 
             <ImageView
                 android:id="@+id/imageView_Free_Spaces"
                 android:layout_width="35dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="220dp"
+                android:layout_marginTop="260dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_gender" />
 
-            <ImageView
-                android:id="@+id/imageView_Time"
-                android:layout_width="35dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_time" />
+            <com.google.android.material.textfield.TextInputLayout
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Time_End"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
+                android:id="@+id/menu_Coworking_Registration"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/white"
-                android:clickable="true"
-                android:text="@string/coworking_end_time"
-                android:textColor="@color/gray"
-                android:textSize="17sp"
-                app:strokeColor="@color/pink" />
+                android:background="@color/light_gray"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_gender">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_Time_Start"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/white"
-                android:clickable="true"
-                android:text="@string/coworking_start_time"
-                android:textColor="@color/gray"
-                android:textSize="17sp"
-                app:strokeColor="@color/pink" />
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView_Coworking_Registration"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/coworking_choose"
+                    android:inputType="none"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField_Date"
@@ -193,17 +216,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="73dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
-                app:endIconDrawable="@drawable/ic_date"
-                app:endIconMode="custom"
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_Date"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:hint="@string/coworking_date"
                     android:inputType="date"
                     android:textSize="15sp" />
@@ -228,18 +251,29 @@
                 android:id="@+id/textView_Purpose"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="@string/coworking_purpose"
                 android:textColor="@color/gray"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/view_Divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/pink" />
 
             <RadioGroup
                 android:id="@+id/radiogroup_Purpose"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white">
 
@@ -247,7 +281,9 @@
                     android:id="@+id/radioButton_Purpose1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1"
+                    android:buttonTint="@color/pink"
                     android:text="@string/coworking_purpose1"
                     android:textSize="20sp" />
 
@@ -255,8 +291,9 @@
                     android:id="@+id/radioButton_Purpose2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1"
+                    android:buttonTint="@color/pink"
                     android:text="@string/coworking_purpose2"
                     android:textSize="20sp" />
 
@@ -264,7 +301,9 @@
                     android:id="@+id/radioButton_Purpose3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1"
+                    android:buttonTint="@color/pink"
                     android:text="@string/coworking_purpose3"
                     android:textSize="20sp" />
             </RadioGroup>

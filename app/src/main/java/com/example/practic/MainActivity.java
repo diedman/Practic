@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,31 +22,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
-        boolean hasVisited = appPref.getBoolean("hasVisited", false);
 
+        boolean hasVisited = appPref.getBoolean("hasVisited", false);
+        //bottomNavigationView.setVisibility(View.GONE);
         if (!hasVisited) loadFragment(FragmentRegistration.newInstance());
         else loadFragment(FragmentLogin.newInstance());
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
-                            loadFragment(new FragmentLenta());
+                            loadFragment(FragmentLenta.newInstance());
                             break;
                         case R.id.page_coworking:
-                            loadFragment(new FragmentRegistrationCoworkingSpace());
+                            loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
                             bottomNavigationView.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.page_personalArea:
-                            loadFragment(new FragmentAccount());
+                            loadFragment(FragmentAccount.newInstance());
                             break;
                     }
                     return false;
