@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentLenta extends Fragment {
 
@@ -23,30 +26,32 @@ public class FragmentLenta extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_lenta, container, false);
-        List<LentaItem> posts = getPosts();
+        View thisView = inflater.inflate(R.layout.fragment_lenta, container, false);
+        List<LentaItem> posts = getPosts();//new ArrayList<>();
+        //posts.add( new LentaItem(R.drawable.noavatar, new EventData(1,"Title", "desc", new Date(1641996794), "no speaker")));
 //        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
 //        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
 //        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
 //        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
 //        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
-//        posts.add( new LentaItem(R.drawable.noavatar, "Tittle", "13.08.2022"));
-        RecyclerView rvStaffs = v.findViewById(R.id.rvLents);
-
+        RecyclerView rvStaffs = thisView.findViewById(R.id.rvLents);
+        AutoCompleteTextView menuCoworking = thisView.findViewById(R.id.autoCompleteTextView_Coworking);
+        
         LentaAdapter adapter = new LentaAdapter(posts);
         rvStaffs.setAdapter(adapter);
         rvStaffs.setLayoutManager(new LinearLayoutManager(thisView.getContext()));
 
 
         //TODO: Подавать значения из базы сюда
-        ArrayList<CoworkerSpace> testArray = new ArrayList<>();
-        testArray.add(new CoworkerSpace(0,"Coworking1",1,1));
-        testArray.add(new CoworkerSpace(1,"Coworking2",1,1));
+        ArrayList<CoworkingSpace> spaces = (ArrayList<CoworkingSpace>) DBCommunication.getCoworkingSpaces();
+//                new ArrayList<>();
+//        spaces.add(new CoworkingSpace(0,"Coworking1",1,1));
+//        spaces.add(new CoworkingSpace(1,"Coworking2",1,1));
 
         //TODO: Если есть идеи, как лучше подавать строку в адаптер, то поправьте
         ArrayList<String> titles = new ArrayList<>();
-        titles.add("Все коворкинги");
-        for (CoworkerSpace space : testArray){
+        //titles.add("Все коворкинги");
+        for (CoworkingSpace space : spaces){
             titles.add(space.getTitle());
         }
 

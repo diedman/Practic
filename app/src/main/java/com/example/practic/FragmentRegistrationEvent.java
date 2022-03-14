@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textview.MaterialTextView;
 
 public class FragmentRegistrationEvent extends Fragment {
-    private MaterialTextView mtvTitle, mtvDate, mtvPlace, mtvDescription, mtvSpeaker;
+    private MaterialTextView mtvTitle, mtvDate, mtvPlace, mtvSpeaker;
+    private ScrollView svDescription;
     private EventData eventData;
 
     public FragmentRegistrationEvent(EventData eventData) {
@@ -36,7 +38,7 @@ public class FragmentRegistrationEvent extends Fragment {
         mtvTitle       = thisView.findViewById(R.id.textView_reg_event_name);
         mtvDate        = thisView.findViewById(R.id.textView_reg_event_date);
         mtvPlace       = thisView.findViewById(R.id.textView_reg_event_place);
-        mtvDescription = thisView.findViewById(R.id.scrollView_reg_event_description);
+        svDescription = thisView.findViewById(R.id.scrollView_reg_event_description);
         mtvSpeaker     = thisView.findViewById(R.id.textView_reg_event_speaker);
     }
 

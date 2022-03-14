@@ -203,8 +203,8 @@ public class DBCommunication {
         return res;
     }
 
-    public static List<CoworkerSpace> getCoworkingSpaces() {
-        List<CoworkerSpace> spaces = new ArrayList<>();
+    public static List<CoworkingSpace> getCoworkingSpaces() {
+        List<CoworkingSpace> spaces = new ArrayList<>();
         try {
             String query = "SELECT * FROM spaces;";
 
@@ -220,7 +220,7 @@ public class DBCommunication {
                         .mapToDouble(Double::parseDouble)
                         .toArray();
 
-                spaces.add(new CoworkerSpace(id, title, coords[0], coords[1]));
+                spaces.add(new CoworkingSpace(id, title, coords[0], coords[1]));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -252,7 +252,7 @@ public class DBCommunication {
 
                 Coordinates coords = Coordinates.parse(locality);
 
-                CoworkerSpace space = new CoworkerSpace(idSpace, spaceName, coords);
+                CoworkingSpace space = new CoworkingSpace(idSpace, spaceName, coords);
 
                 spaces.add(new CoworkingSession(space, qr, purpose, startSession, endSession));
             }

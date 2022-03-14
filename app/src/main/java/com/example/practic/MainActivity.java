@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -31,11 +27,21 @@ public class MainActivity extends AppCompatActivity {
 
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
         //bottomNavigationView.setVisibility(View.GONE);
-        if (!hasVisited) loadFragment(FragmentRegistration.newInstance());
-        else loadFragment(FragmentLogin.newInstance());
+        if (!hasVisited) {
+            String email    = appPref.getString("email", "");
+            String password = appPref.getString("password", ":");
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
+            int isDataCorrect = DBCommunication.authenticateCoworker(email, password);
+
+            if (isDataCorrect != 1) {
+                loadFragment(FragmentRegistration.newInstance());
+            }
+        }
+        else {
+            loadFragment(FragmentLogin.newInstance());
+        }
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {

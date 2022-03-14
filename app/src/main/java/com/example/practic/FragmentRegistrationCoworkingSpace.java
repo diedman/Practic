@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,7 +70,7 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
-        tilDate.setEndIconOnClickListener(view -> {
+        edtDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     dateSetListener, year, month, day);
@@ -114,5 +109,19 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+        //TODO: Подавать значения из базы сюда
+        ArrayList<CoworkingSpace> testArray = (ArrayList<CoworkingSpace>) DBCommunication.getCoworkingSpaces();//new ArrayList<>();
+//        testArray.add(new CoworkingSpace(0,"Coworking1",1,1));
+//        testArray.add(new CoworkingSpace(1,"Coworking2",1,1));
+
+        //TODO: Если есть идеи, как лучше подавать строку в адаптер, то поправьте
+        ArrayList<String> titles = new ArrayList<>();
+        for (CoworkingSpace space : testArray){
+            titles.add(space.getTitle());
+        }
+
+        ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(thisView.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, titles);
+        menuCoworking.setAdapter(menuAdapter);
     }
 }
