@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -48,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.page_news:
                             loadFragment(FragmentLenta.newInstance());
+                            item.setChecked(true);
                             break;
                         case R.id.page_coworking:
                             loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
-                            bottomNavigationView.setVisibility(View.INVISIBLE);
+                            item.setChecked(true);
                             break;
                         case R.id.page_personalArea:
                             loadFragment(FragmentAccount.newInstance());
+                            item.setChecked(true);
                             break;
                     }
                     return false;
