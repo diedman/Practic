@@ -3,13 +3,13 @@ package com.example.practic;
 import java.sql.Date;
 
 public class CoworkingSession {
-    private CoworkerSpace space;
+    private CoworkingSpace space;
     private String qr;
     private String purpose;
     private Date startSession;
     private Date endSession;
 
-    public CoworkingSession(CoworkerSpace space,
+    public CoworkingSession(CoworkingSpace space,
                             String qr,
                             String purpose,
                             Date startSession,
@@ -22,7 +22,7 @@ public class CoworkingSession {
     }
 
 
-    public CoworkerSpace getSpace() {
+    public CoworkingSpace getSpace() {
         return space;
     }
 

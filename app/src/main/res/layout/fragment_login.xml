@@ -76,7 +76,7 @@
                 android:id="@+id/editText_Email"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:hint="@string/login"
+                android:hint="@string/email"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

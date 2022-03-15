@@ -44,7 +44,7 @@ public class FragmentLogin extends Fragment {
     private void initAdapters() {
         btnSignIn.setOnClickListener(view -> {
             if (!authenticate()) {
-                Toast.makeText(getContext(), "Регистрация не удалась!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Авторизация не удалась!", Toast.LENGTH_LONG).show();
                 return;
             }
 

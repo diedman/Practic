@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -22,56 +20,61 @@ public class LentaAdapter extends
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
-        public TextView titleTextView;
-        public TextView dateTextView;
+        public TextView tvTitle;
+        public TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            image = (ImageView) itemView.findViewById(R.id.imageview_lentimage);
-            titleTextView = (TextView) itemView.findViewById(R.id.text_title);
-            dateTextView = (TextView) itemView.findViewById(R.id.text_date);
-
+            image = itemView.findViewById(R.id.imageview_lentimage);
+            tvTitle = itemView.findViewById(R.id.text_title);
+            tvDate = itemView.findViewById(R.id.text_date);
         }
     }
 
-    private List<Lenta> mLenta;
-    public LentaAdapter(List<Lenta> posts){mLenta = posts;}
+    private final List<LentaItem> mLentaItem;
+    public LentaAdapter(List<LentaItem> posts) {
+        mLentaItem = posts;
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        // Inflate the custom layout
         View lentaView = inflater.inflate(R.layout.recyclerview_lenta_item, parent, false);
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(lentaView);
-        return viewHolder;
+        return new ViewHolder(lentaView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Lenta lenta = mLenta.get(position);
+        LentaItem lentaItem = mLentaItem.get(position);
 
         ImageView image = holder.image;
-        TextView tittle = holder.titleTextView;
-        TextView date = holder.dateTextView;
+        TextView tittle = holder.tvTitle;
+        TextView date = holder.tvDate;
 
-        image.setImageResource(lenta.getId_picture());
-        tittle.setText(lenta.getTittle());
-        date.setText(lenta.getDate());
+        image.setImageResource(lentaItem.getIdPicture());
+        tittle.setText(lentaItem.getTittle());
+        date.setText(lentaItem.getDate());
 
         holder.image.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            FragmentRegistrationEvent myFragment = new FragmentRegistrationEvent();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, myFragment).addToBackStack(null).commit();
+            Fragment fragment = new FragmentRegistrationEvent(lentaItem.getEventData());
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, fragment);
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainerView, fragment)
+                    .addToBackStack(null)
+                    .commit();
 
         });
     }
 
     @Override
     public int getItemCount() {
-        return mLenta.size();
+        return mLentaItem.size();
     }
 }

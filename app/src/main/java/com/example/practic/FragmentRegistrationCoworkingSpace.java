@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.material.textfield.TextInputLayout;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,7 +70,6 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
-
         edtDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -88,12 +84,13 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         };
 
         btnNext.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext(), R.style.AppCompatAlertDialogStyle);
+            AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
             builder.setTitle(getString(R.string.coworking_equipment_ask));
 
             // TODO: Подавать значения из базы
             String[] testData = {"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
             boolean[] checkedItems = {false, false, false, false, false};
+
             builder.setMultiChoiceItems(testData, checkedItems,
                     (dialogInterface, item, isChecked) -> {
 
@@ -112,15 +109,14 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-
         //TODO: Подавать значения из базы сюда
-        ArrayList<CoworkerSpace> testArray = new ArrayList<>();
-        testArray.add(new CoworkerSpace(0,"Coworking1",1,1));
-        testArray.add(new CoworkerSpace(1,"Coworking2",1,1));
+        ArrayList<CoworkingSpace> testArray = (ArrayList<CoworkingSpace>) DBCommunication.getCoworkingSpaces();//new ArrayList<>();
+//        testArray.add(new CoworkingSpace(0,"Coworking1",1,1));
+//        testArray.add(new CoworkingSpace(1,"Coworking2",1,1));
 
         //TODO: Если есть идеи, как лучше подавать строку в адаптер, то поправьте
         ArrayList<String> titles = new ArrayList<>();
-        for (CoworkerSpace space : testArray){
+        for (CoworkingSpace space : testArray){
             titles.add(space.getTitle());
         }
 

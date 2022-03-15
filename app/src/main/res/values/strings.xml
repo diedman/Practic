@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">«ПРОСТО».</string>
 
-    <string name="login">Логин</string>
+    <string name="email">Email</string>
     <string name="password">Пароль</string>
 
     <string name="registration_required_fields">*Поля, обязательные для заполнения.</string>
