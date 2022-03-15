@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:backgroundTint="@color/white"
+    android:backgroundTintMode="multiply"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView_QR_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="Coworking/Event Name"
+        android:textColor="@color/gray"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView_QR_Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView_QR_Time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="Time"
+        android:textColor="@color/gray" />
+
+    <TextView
+        android:id="@+id/textView_QR_Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="Date"
+        android:textColor="@color/gray" />
+
+    <TextView
+        android:id="@+id/textView_QR_Place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="Place"
+        android:textColor="@color/gray" />
+
+    <TextView
+        android:id="@+id/textView_QR_Workplace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="Workplace (Optional) "
+        android:textColor="@color/gray" />
+
+    <TextView
+        android:id="@+id/textView_QR_Locker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:text="Locker (Optional) "
+        android:textColor="@color/gray" />
+
+</LinearLayout>

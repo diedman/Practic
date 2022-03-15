@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prosto_app</string>
+    <string name="app_name">«ПРОСТО».</string>
 
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
@@ -53,4 +53,10 @@
     <string name="coworking_choose_start_time">Выберите время начала</string>
     <string name="coworking_choose_end_time">Выберите время окончания</string>
     <string name="coworking_choose_date">Выберите дату</string>
+
+    <string name="account_edit">Редактировать</string>
+    <string name="qr_events">QR-коды мероприятий</string>
+    <string name="qr_coworking">QR-коды коворкингов</string>
+
+    <string name="account_edit_save">Сохранить</string>
 </resources>
