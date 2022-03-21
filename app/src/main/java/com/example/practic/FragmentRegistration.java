@@ -93,14 +93,44 @@ public class FragmentRegistration extends Fragment {
         menuMaritalStatus.setAdapter(adapter);
 
         btnSignUp.setOnClickListener(view -> {
-            if (!registration()) {
+
+            String firstname     = edtFirstname.getText().toString().trim();
+            String lastname      = edtLastname.getText().toString().trim();
+            String password      = edtPassword.getText().toString().trim();
+            Date birthdate;
+            try {
+                birthdate        = new java.sql.Date(Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy")
+                        .parse(edtBirthDate.getText().toString())).getTime());
+            } catch (ParseException e) {
+                Toast.makeText(getContext(), "Неверный формат даты!", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+                return;
+            }
+            String email         = edtEmail.getText().toString().trim();
+            String phoneNum      = edtPhoneNum.getText().toString().trim();
+            String sex           = menuGender.getText().toString().trim();
+            String maritalStatus = menuMaritalStatus.getText().toString().trim();
+
+            if (firstname.equals("") || lastname.equals("") || password.equals("")
+                    || email.equals("") || sex.equals("") || maritalStatus.equals(""))
+            {
+                Toast.makeText(getContext(), "Не все обязательные поля заполнены!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            boolean registerRes = DBCommunication.registerCoworker(firstname, lastname, null,
+                    password, birthdate, email, phoneNum,
+                    sex, maritalStatus) == 1;
+
+            if (registerRes) {
                 Toast.makeText(getContext(), "Регистрация не удалась!", Toast.LENGTH_LONG).show();
                 return;
             }
 
             SharedPreferences appPref = requireContext().getSharedPreferences("app_shared_data",
                                                                             Context.MODE_PRIVATE);
-            appPref.edit().putBoolean("hasVisited", true).apply();
+            appPref.edit().putString("email", email).apply();
+            appPref.edit().putString("password", password).apply();
 
             getParentFragmentManager()
                     .beginTransaction()
@@ -120,24 +150,4 @@ public class FragmentRegistration extends Fragment {
         });
     }
 
-    private boolean registration() {
-        String firstname     = edtFirstname.getText().toString();
-        String lastname      = edtLastname.getText().toString();
-        String password      = edtPassword.getText().toString();
-        Date birthdate       = null;
-        try {
-            birthdate        = new java.sql.Date(Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy")
-                    .parse(edtBirthDate.getText().toString())).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String email         = edtEmail.getText().toString();
-        String phoneNum      = edtPhoneNum.getText().toString();
-        String sex           = menuGender.getText().toString();
-        String maritalStatus = menuMaritalStatus.getText().toString();
-        int res = DBCommunication.registerCoworker(firstname, lastname, null,
-                                         password, birthdate, email, phoneNum,
-                                         sex, maritalStatus);
-        return res == 1;
-    }
 }

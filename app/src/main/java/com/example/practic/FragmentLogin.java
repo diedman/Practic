@@ -43,14 +43,25 @@ public class FragmentLogin extends Fragment {
 
     private void initAdapters() {
         btnSignIn.setOnClickListener(view -> {
-            if (!authenticate()) {
+            String email    = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
+
+            if (email.equals("") || password.equals("")) {
+                Toast.makeText(getContext(), "Заполните все поля!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            boolean authenticationRes = DBCommunication.authenticateCoworker(email, password) == 1;
+
+            if (!authenticationRes) {
                 Toast.makeText(getContext(), "Авторизация не удалась!", Toast.LENGTH_LONG).show();
                 return;
             }
 
             SharedPreferences appPref = requireContext().getSharedPreferences("app_shared_data",
                                                                              Context.MODE_PRIVATE);
-            appPref.edit().putBoolean("hasVisited", true).apply();
+            appPref.edit().putString("email", email).apply();
+            appPref.edit().putString("password", password).apply();
 
             getParentFragmentManager()
                     .beginTransaction()
@@ -70,10 +81,4 @@ public class FragmentLogin extends Fragment {
         });
     }
 
-    private boolean authenticate() {
-        String email    = edtEmail.getText().toString();
-        String password = edtPassword.getText().toString();
-        int res = DBCommunication.authenticateCoworker(email, password);
-        return res == 1;
-    }
 }

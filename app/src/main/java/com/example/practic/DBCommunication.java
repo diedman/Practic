@@ -58,7 +58,7 @@ public class DBCommunication {
             }
 
             String query = "INSERT INTO coworkers (firstname, lastname, patronymic, hashed_password, birthday, email, phone_num, sex, id_marital_status) \n" +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
             String hashedPassword = PasswordAuthentication.getHashedPassword(password);
 
@@ -265,7 +265,7 @@ public class DBCommunication {
     public static List<EventData> getEvents() {
         List<EventData> events = new ArrayList<>();
         try {
-            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events;";
+            String query = "SELECT * FROM events;";
 
             PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -276,8 +276,9 @@ public class DBCommunication {
                 String eventDescr = rs.getString(3);
                 Date   date       = rs.getDate(4);
                 String speaker    = rs.getString(5);
+                int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker));
+                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -288,7 +289,7 @@ public class DBCommunication {
     public static List<EventData> getCoworkingEvents(int idCoworkingSpace) {
         List<EventData> events = new ArrayList<>();
         try {
-            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events WHERE id_space = ?;";
+            String query = "SELECT * FROM events WHERE id_space = ?;";
 
             PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -301,8 +302,9 @@ public class DBCommunication {
                 String eventDescr = rs.getString(3);
                 Date   date       = rs.getDate(4);
                 String speaker    = rs.getString(5);
+                int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker));
+                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -328,8 +330,9 @@ public class DBCommunication {
                 String eventDescr = rs.getString(3);
                 Date   date       = rs.getDate(4);
                 String speaker    = rs.getString(5);
+                int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker));
+                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
             }
         } catch (SQLException e) {
             e.printStackTrace();

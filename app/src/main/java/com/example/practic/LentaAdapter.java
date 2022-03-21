@@ -32,9 +32,14 @@ public class LentaAdapter extends
         }
     }
 
-    private final List<LentaItem> mLentaItem;
+    private List<LentaItem> mLentaItem;
     public LentaAdapter(List<LentaItem> posts) {
         mLentaItem = posts;
+    }
+
+    public void setItems(List<LentaItem> posts) {
+        mLentaItem = posts;
+        notifyDataSetChanged();
     }
 
     @NonNull

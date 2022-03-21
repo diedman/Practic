@@ -42,8 +42,7 @@ public class QRDisplayAdapter extends
         // Inflate the custom layout
         View thisView = inflater.inflate(R.layout.recyclerview_qr_item, parent, false);
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(thisView);
-        return viewHolder;
+        return new ViewHolder(thisView);
     }
 
     @Override
@@ -51,9 +50,9 @@ public class QRDisplayAdapter extends
         QRCodeDisplay QR = QRDisplayList.get(position);
 
         ImageView imgQR = holder.imgQR;
-        TextView title = holder.tvTitle;
-        TextView time = holder.tvTime;
-        TextView date = holder.tvDate;
+        TextView title  = holder.tvTitle;
+        TextView time   = holder.tvTime;
+        TextView date   = holder.tvDate;
         TextView workPlace = holder.tvWorkPlace;
         TextView locker = holder.tvLocker;
 
