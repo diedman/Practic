@@ -199,7 +199,7 @@
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_SingUp"
+            android:id="@+id/button_reg_event_SingUp"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="270dp"
             android:layout_height="70dp"

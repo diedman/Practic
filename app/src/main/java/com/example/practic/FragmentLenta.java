@@ -69,7 +69,6 @@ public class FragmentLenta extends Fragment {
         ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(thisView.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, titles);
         menuCoworking.setAdapter(menuAdapter);
-        menuCoworking.setSelection(0);
 
         menuCoworking.setOnItemClickListener((adapterView, view, i, l) -> {
             if (i == 0) {
@@ -78,7 +77,7 @@ public class FragmentLenta extends Fragment {
             }
             int spaceId = spaces.get(i-1).getId();
             List<LentaItem> coworkingPosts = posts.stream()
-                    .filter(v -> v.getEventData().getSpaceId() == spaceId)
+                    .filter(v -> v.getEventData().getSpace().getId() == spaceId)
                     .collect(Collectors.toList());
 
             lentaAdapter.setItems(coworkingPosts);

@@ -10,6 +10,6 @@ public class CoworkerData {
     public static Date birthday;
     public static String email;
     public static String phoneNum;
-    public static String sex;
+    public static String gender;
     public static String maritalStatus;
 }

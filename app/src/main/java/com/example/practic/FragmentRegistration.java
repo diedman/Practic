@@ -60,7 +60,7 @@ public class FragmentRegistration extends Fragment {
         menuMaritalStatus = thisView.findViewById(R.id.autoCompleteTextView_Marital_Status);
         tvForgotPassword  = thisView.findViewById(R.id.textView_Forgot_Password);
         tvSignIn          = thisView.findViewById(R.id.textView_SignIn);
-        btnSignUp         = thisView.findViewById(R.id.button_SingUp);
+        btnSignUp         = thisView.findViewById(R.id.button_reg_event_SingUp);
     }
 
     private void initAdapters(View thisView) {

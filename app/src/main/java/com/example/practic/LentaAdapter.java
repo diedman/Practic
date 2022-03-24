@@ -68,9 +68,6 @@ public class LentaAdapter extends
             Fragment fragment = new FragmentRegistrationEvent(lentaItem.getEventData());
             activity.getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentContainerView, fragment);
-            activity.getSupportFragmentManager()
-                    .beginTransaction()
                     .replace(R.id.fragmentContainerView, fragment)
                     .addToBackStack(null)
                     .commit();

@@ -263,7 +263,7 @@
         </com.google.android.material.checkbox.MaterialCheckBox>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_SingUp"
+            android:id="@+id/button_reg_event_SingUp"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="306dp"
             android:layout_height="58dp"

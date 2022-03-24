@@ -6,13 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DBCommunication {
     private static Connection conn = DBUtil.getConnection();
 
-    public static int ifCoworkerExists(String email) {
+    public static int isCoworkerExists(String email) {
         int res = 0;
         try {
             String query = "SELECT * FROM coworkers WHERE email = ?;";
@@ -23,7 +22,7 @@ public class DBCommunication {
 
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) { res = 1; } else { res = -1; }
+            res = rs.next() ? 1 : 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,7 +48,7 @@ public class DBCommunication {
         int res = -1;
 
         try {
-            if (ifCoworkerExists(email) == 1) { return 0; }
+            if (isCoworkerExists(email) == 1) { return 0; }
 
             int idMaritalStatus = getMaritalStatusId(maritalStatus);
 
@@ -83,6 +82,23 @@ public class DBCommunication {
         return res;
     }
 
+    public static int isAlreadyRegisteredOnCoworking(int idSpace, int idCoworker) {
+        int res = -1;
+        try {
+            String query = "SELECT * FROM coworkers_spaces WHERE (id_space = ?) AND (id_cowoker = ?);";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, idSpace);
+            stmt.setInt(2, idCoworker);
+
+            ResultSet rs = stmt.executeQuery();
+            res = rs.next() ? 1 : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public static int registerOnCoworking(int idSpace,
                                           int idCoworker,
                                           String qr,
@@ -91,8 +107,15 @@ public class DBCommunication {
                                           String purposeName,
                                           String[] tools) {
         int res = -1;
-
         try {
+            int checkRes = isAlreadyRegisteredOnCoworking(idSpace, idCoworker);
+            if (checkRes != 0) {
+                if (checkRes == 1) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
             String query = "INSERT INTO coworkers_spaces (id_space, id_coworker, qr, " +
                             "start_session, end_session, id_purpose) \n" +
                            "VALUES (?, ?, ?, ?, ?, ?);";
@@ -120,9 +143,10 @@ public class DBCommunication {
     public static int registerTools(int idCoworker, int idSpace, String[] tools) {
         int res = -1;
         clearTools(idCoworker, idSpace, tools);
+        if (tools.length == 0) { return 1; }
         try {
             String query = "INSERT INTO session_tools (id_tool, id_coworker, id_space) \n" +
-                    "VALUES (?, ?, ?)";
+                    "VALUES (?, ?, ?);";
             PreparedStatement stmt = conn.prepareStatement(query);
 
             for (String tool: tools) {
@@ -145,9 +169,35 @@ public class DBCommunication {
         return res;
     }
 
+    public static int isAlreadyRegisteredOnEvent(int idEvent, int idCoworker) {
+        int res = -1;
+        try {
+            String query = "SELECT * FROM coworkers_events WHERE (id_event = ?) AND (id_coworker = ?);";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, idEvent);
+            stmt.setInt(2, idCoworker);
+
+            ResultSet rs = stmt.executeQuery();
+            res = rs.next() ? 1 : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public static int registerOnEvent(int idEvent, int idCoworker, String qr) {
         int res = -1;
         try {
+            int checkRes = isAlreadyRegisteredOnEvent(idEvent, idCoworker);
+            if (checkRes != 0) {
+                if (checkRes == 1) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
             String query = "INSERT INTO coworkers_events (id_event, id_coworker, qr) \n" +
                     "VALUES (?, ?, ?);";
 
@@ -190,7 +240,7 @@ public class DBCommunication {
                 CoworkerData.birthday       = rs.getDate(6);
                 CoworkerData.email          = rs.getString(7);
                 CoworkerData.phoneNum       = rs.getString(8);
-                CoworkerData.sex            = rs.getString(9);
+                CoworkerData.gender         = rs.getString(9);
                 CoworkerData.maritalStatus  = rs.getString(10);
 
                 res = PasswordAuthentication.authenticate(password, hashedPassword) ? 1 : 0;
@@ -203,6 +253,32 @@ public class DBCommunication {
         return res;
     }
 
+    public static CoworkingSpace getCoworkingSpace(int spaceId) {
+        CoworkingSpace space = null;
+        try {
+            String query = "SELECT * FROM spaces WHERE id = ?;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, spaceId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int    id       = rs.getInt(1);
+                String title    = rs.getString(2);
+                String locality = rs.getString(3);
+                int    seats    = rs.getInt(4);
+
+                Coordinates coords = Coordinates.parse(locality);
+
+                space = new CoworkingSpace(id, title, coords, seats);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return space;
+    }
+
     public static List<CoworkingSpace> getCoworkingSpaces() {
         List<CoworkingSpace> spaces = new ArrayList<>();
         try {
@@ -212,15 +288,14 @@ public class DBCommunication {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt(1);
-                String title = rs.getString(2);
+                int    id       = rs.getInt(1);
+                String title    = rs.getString(2);
                 String locality = rs.getString(3);
+                int    seats    = rs.getInt(4);
 
-                double[] coords = Arrays.stream(locality.split(":"))
-                        .mapToDouble(Double::parseDouble)
-                        .toArray();
+                Coordinates coords = Coordinates.parse(locality);
 
-                spaces.add(new CoworkingSpace(id, title, coords[0], coords[1]));
+                spaces.add(new CoworkingSpace(id, title, coords, seats));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -233,7 +308,7 @@ public class DBCommunication {
         try {
             String query = "SELECT spaces.id, spaces.title, coworkers_spaces.qr, " +
                     "purposes.title, coworkers_spaces.start_session, coworkers_spaces.end_session," +
-                    "spaces.locality \n" +
+                    "spaces.locality, spaces.seats \n" +
                     "FROM coworkers_spaces, spaces, purposes \n" +
                     "WHERE (spaces.id = coworkers_spaces.id_space) " +
                     "AND (purposes.id = coworkers_spaces.id_purpose);";
@@ -242,17 +317,18 @@ public class DBCommunication {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int idSpace       = rs.getInt(1);
-                String spaceName  = rs.getString(2);
-                String qr         = rs.getString(3);
-                String purpose    = rs.getString(4);
-                Date startSession = rs.getDate(5);
-                Date endSession   = rs.getDate(6);
-                String locality   = rs.getString(7);
+                int    idSpace      = rs.getInt(1);
+                String spaceName    = rs.getString(2);
+                String qr           = rs.getString(3);
+                String purpose      = rs.getString(4);
+                Date   startSession = rs.getDate(5);
+                Date   endSession   = rs.getDate(6);
+                String locality     = rs.getString(7);
+                int    seats        = rs.getInt(8);
 
                 Coordinates coords = Coordinates.parse(locality);
 
-                CoworkingSpace space = new CoworkingSpace(idSpace, spaceName, coords);
+                CoworkingSpace space = new CoworkingSpace(idSpace, spaceName, coords, seats);
 
                 spaces.add(new CoworkingSession(space, qr, purpose, startSession, endSession));
             }
@@ -278,7 +354,9 @@ public class DBCommunication {
                 String speaker    = rs.getString(5);
                 int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
+                CoworkingSpace space = getCoworkingSpace(spaceId);
+
+                events.add(new EventData(id, title, eventDescr, date, speaker, space));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -304,7 +382,9 @@ public class DBCommunication {
                 String speaker    = rs.getString(5);
                 int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
+                CoworkingSpace space = getCoworkingSpace(spaceId);
+
+                events.add(new EventData(id, title, eventDescr, date, speaker, space));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -332,7 +412,9 @@ public class DBCommunication {
                 String speaker    = rs.getString(5);
                 int    spaceId    = rs.getInt(6);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker, spaceId));
+                CoworkingSpace space = getCoworkingSpace(spaceId);
+
+                events.add(new EventData(id, title, eventDescr, date, speaker, space));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -435,16 +517,16 @@ public class DBCommunication {
         return eventQR;
     }
 
+    public static int getPurposeId(String purposeName) {
+        return getId("purposes", purposeName);
+    }
+
     private static int getMaritalStatusId(String maritalStatusName) {
         return getId("marital_statuses", maritalStatusName);
     }
 
     private static int getToolId(String toolName) {
         return getId("tools", toolName);
-    }
-
-    private static int getPurposeId(String purposeName) {
-        return getId("purposes", purposeName);
     }
 
     private static int getId(String tableName, String title) {
