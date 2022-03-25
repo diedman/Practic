@@ -32,9 +32,14 @@ public class LentaAdapter extends
         }
     }
 
-    private final List<LentaItem> mLentaItem;
+    private List<LentaItem> mLentaItem;
     public LentaAdapter(List<LentaItem> posts) {
         mLentaItem = posts;
+    }
+
+    public void setItems(List<LentaItem> posts) {
+        mLentaItem = posts;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -61,9 +66,6 @@ public class LentaAdapter extends
         holder.image.setOnClickListener(view -> {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             Fragment fragment = new FragmentRegistrationEvent(lentaItem.getEventData());
-            activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainerView, fragment);
             activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentContainerView, fragment)

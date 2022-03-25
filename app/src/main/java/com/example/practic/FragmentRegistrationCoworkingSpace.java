@@ -11,16 +11,30 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FragmentRegistrationCoworkingSpace extends Fragment {
     int hour, minute;
+    int chosenSpaceId;
+    String chosenDate;
+    String chosenStartTime;
+    String chosenEndTime;
+    String chosenPurpose;
     Button btnNext;
+    RadioGroup rgPurposes;
     TimePickerDialog.OnTimeSetListener timeSetListener;
     DatePickerDialog.OnDateSetListener dateSetListener;
     EditText edtDate, edtStartTime, edtEndTime;
@@ -50,6 +64,7 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         edtEndTime    = thisView.findViewById(R.id.editText_End_Time);
         btnNext       = thisView.findViewById(R.id.button_Next);
         menuCoworking = thisView.findViewById(R.id.autoCompleteTextView_Coworking_Registration);
+        rgPurposes    = thisView.findViewById(R.id.radiogroup_Purpose);
     }
 
     //Метод установки обработчика на поле для вывода выбора времени
@@ -58,7 +73,7 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
 
             timeSetListener = ((timePicker, hour_, minute_) ->
                     editText.setText(String.format(Locale.getDefault(),
-                            "%02d:%02d", hour_, minute_)));
+                        "%02d:%02d", hour_, minute_)));
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(thisView.getContext(),
                     timeSetListener, hour, minute, true);
@@ -90,44 +105,102 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
 
         //Обработчик нажатия на кнопку "Далее"
         btnNext.setOnClickListener(view -> {
+            chosenDate      = edtDate.getText().toString();
+            chosenStartTime = edtStartTime.getText().toString();
+            chosenEndTime   = edtEndTime.getText().toString();
+
+            for (int i = 0; i < rgPurposes.getChildCount(); ++i) {
+                View rb = rgPurposes.getChildAt(i);
+                if ((rb instanceof RadioButton) && ((RadioButton)rb).isChecked()) {
+                    chosenPurpose = ((RadioButton)rb).getText().toString();
+                    break;
+                }
+            }
+
             AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
+            AtomicReference<String> resMessage = null;
             builder.setTitle(getString(R.string.coworking_equipment_ask));
 
             // TODO: Подавать значения из базы
-            String[] testData = {"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
-            boolean[] checkedItems = {false, false, false, false, false};
+            List<String> toolsList = DBCommunication.getTools();//{"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
+            String[] tools = new String[toolsList.size()];
+            toolsList.toArray(tools);
+            boolean[] checkedItems = new boolean[tools.length];
 
-            builder.setMultiChoiceItems(testData, checkedItems,
-                    (dialogInterface, item, isChecked) -> {
-
-                    });
+            builder.setMultiChoiceItems(tools, checkedItems,
+                    (dialogInterface, item, isChecked) -> {});
 
             builder.setPositiveButton(R.string.coworking_equipment_dialog_yes,
                     (dialogInterface, listener) -> {
+                        toolsList.clear();
+                        for (int i = 0; i < checkedItems.length; ++i) {
+                            if (checkedItems[i]) {
+                                toolsList.add(tools[i]);
+                            }
+                        }
 
+                        String[] checkedTools = new String[toolsList.size()];
+                        toolsList.toArray(checkedTools);
+
+                        int res = registerOnCoworking(checkedTools);
+                        if (res == 1) {
+                            resMessage.set("Регистрация прошла успешно!");
+                        } else if (res == 0) {
+                            resMessage.set("Вы уже зарегистрированы!");
+                        } else {
+                            resMessage.set("Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!");
+                        }
                     });
 
             builder.setNegativeButton(R.string.coworking_equipment_dialog_no,
                     (dialogInterface, listener) -> {
+                        int res = registerOnCoworking(new String[0]);
+                        if (res == 1) {
+                            resMessage.set("Регистрация прошла успешно!");
+                        } else if (res == 0) {
+                            resMessage.set("Вы уже зарегистрированы!");
+                        } else {
+                            resMessage.set("Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!");
+                        }
 
+//                        builder.setTitle(resMessage.get());
+//                        dialog = builder.
                     });
 
             AlertDialog dialog = builder.create();
             dialog.show();
         });
         //TODO: Подавать значения из базы сюда
-        ArrayList<CoworkingSpace> testArray = (ArrayList<CoworkingSpace>) DBCommunication.getCoworkingSpaces();//new ArrayList<>();
+        ArrayList<CoworkingSpace> spaces = (ArrayList<CoworkingSpace>) DBCommunication.getCoworkingSpaces();//new ArrayList<>();
 //        testArray.add(new CoworkingSpace(0,"Coworking1",1,1));
 //        testArray.add(new CoworkingSpace(1,"Coworking2",1,1));
 
         //TODO: Если есть идеи, как лучше подавать строку в адаптер, то поправьте
         ArrayList<String> titles = new ArrayList<>();
-        for (CoworkingSpace space : testArray){
+        for (CoworkingSpace space : spaces){
             titles.add(space.getTitle());
         }
 
         ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(thisView.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, titles);
         menuCoworking.setAdapter(menuAdapter);
+
+        menuCoworking.setOnItemClickListener((adapterView, view, i, l) -> chosenSpaceId = spaces.get(i).getId());
+    }
+
+    private int registerOnCoworking(String[] tools) {
+        Date startDateTime = null, endDateTime = null;
+        try {
+             startDateTime = new Date(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+                    .parse(chosenStartTime + " " + chosenDate)).getTime());
+             endDateTime = new Date(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+                     .parse(chosenEndTime + " " + chosenDate)).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String strqr = Utilities.getRandomHexStr(64);
+        return DBCommunication.registerOnCoworking(chosenSpaceId, CoworkerData.id, strqr,
+                                                   startDateTime, endDateTime, chosenPurpose, tools);
     }
 }

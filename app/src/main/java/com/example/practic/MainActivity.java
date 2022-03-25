@@ -24,19 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
-        boolean hasVisited = appPref.getBoolean("hasVisited", false);
-        if (!hasVisited) {
-            String email    = appPref.getString("email", "");
-            String password = appPref.getString("password", ":");
 
-            int isDataCorrect = DBCommunication.authenticateCoworker(email, password);
+        String email    = appPref.getString("email", Utilities.getRandomHexStr(32));
+        String password = appPref.getString("password", Utilities.getRandomHexStr(32));
 
-            if (isDataCorrect != 1) {
-                loadFragment(FragmentRegistration.newInstance());
-            }
-        }
-        else {
+        int isDataCorrect = DBCommunication.authenticateCoworker(email, password);
+
+        if (isDataCorrect != 1) {
+            appPref.edit().clear().apply();
             loadFragment(FragmentLogin.newInstance());
+        } else {
+            loadFragment(FragmentLenta.newInstance());
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

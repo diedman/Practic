@@ -8,14 +8,15 @@ public class EventData {
     private String description;
     private Date meetingDate;
     private String speaker;
+    private CoworkingSpace space;
 
-
-    public EventData(int id, String title, String description, Date meetingDate, String speaker) {
+    public EventData(int id, String title, String description, Date meetingDate, String speaker, CoworkingSpace space) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.meetingDate = meetingDate;
         this.speaker = speaker;
+        this.space = space;
     }
 
     public int getId() {
@@ -37,4 +38,6 @@ public class EventData {
     public String getSpeaker() {
         return speaker;
     }
+
+    public CoworkingSpace getSpace() { return space; }
 }

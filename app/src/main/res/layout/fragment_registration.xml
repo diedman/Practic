@@ -133,6 +133,7 @@
             android:layout_marginEnd="16dp"
             app:boxBackgroundColor="@color/white"
             app:endIconMode="none"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -268,7 +269,7 @@
         </com.google.android.material.checkbox.MaterialCheckBox>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_SingUp"
+            android:id="@+id/button_reg_event_SingUp"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="306dp"
             android:layout_height="58dp"

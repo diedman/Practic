@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class FragmentAccountEdit extends Fragment {
@@ -32,13 +33,28 @@ public class FragmentAccountEdit extends Fragment {
 
     private void initFields (View thisView) {
         edtEmail          = thisView.findViewById(R.id.editText_Email_Edit);
+        edtEmail.setText(CoworkerData.email);
+
         edtPassword       = thisView.findViewById(R.id.editText_Password_Edit);
+
         edtFirstname      = thisView.findViewById(R.id.editText_First_Name_Edit);
+        edtFirstname.setText(CoworkerData.firstname);
+
         edtLastname       = thisView.findViewById(R.id.editText_Last_Name_Edit);
+        edtLastname.setText(CoworkerData.lastname);
+
         edtBirthDate      = thisView.findViewById(R.id.editText_Birthday_Edit);
+        edtBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy hh:mm").format(CoworkerData.birthday));
+
         edtPhoneNum       = thisView.findViewById(R.id.editText_Phone_Edit);
+        edtPhoneNum.setText(CoworkerData.phoneNum);
+
         menuGender        = thisView.findViewById(R.id.autoCompleteTextView_Gender_Edit);
+        menuGender.setText(CoworkerData.gender);
+
         menuMaritalStatus = thisView.findViewById(R.id.autoCompleteTextView_Marital_Status_Edit);
+        menuMaritalStatus.setText(CoworkerData.maritalStatus);
+
         btnSave           = thisView.findViewById(R.id.button_Save);
     }
 

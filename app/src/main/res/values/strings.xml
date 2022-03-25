@@ -46,7 +46,7 @@
     <string name="coworking_end_time">Окончание</string>
 
     <string name="coworking_equipment_ask">Какая техника вам нужна для работы в коворкинге?</string>
-    <string name="coworking_equipment_dialog_yes">Далее</string>
+    <string name="coworking_equipment_dialog_yes">Зарегистрироваться</string>
     <string name="coworking_equipment_dialog_no">Мне не нужна орг. техника</string>
 
     <string name="coworking_choose">Коворкинг</string>
