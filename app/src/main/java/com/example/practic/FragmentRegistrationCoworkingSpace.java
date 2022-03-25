@@ -43,6 +43,7 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         return thisView;
     }
 
+    //Метод инициализации полей
     private void initFields(View thisView) {
         edtDate       = thisView.findViewById(R.id.editText_Date);
         edtStartTime  = thisView.findViewById(R.id.editText_Start_Time);
@@ -51,6 +52,7 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         menuCoworking = thisView.findViewById(R.id.autoCompleteTextView_Coworking_Registration);
     }
 
+    //Метод установки обработчика на поле для вывода выбора времени
     private void setTimeListener(EditText editText, View thisView, String title) {
         editText.setOnClickListener(view -> {
 
@@ -65,11 +67,13 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         });
     }
 
+    //Метод инициализации обработчиков
     private void initListeners(View thisView){
         Calendar calendar = Calendar.getInstance();
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
+        //Обработчик вызова окна выбора даты
         edtDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -77,12 +81,14 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             datePickerDialog.show();
         });
 
+        //Обработчик изменения даты в поле
         dateSetListener = (datePicker, year_, month_, day_) -> {
             month_++;
             String date = day_ + "/" + month_ + "/" + year_;
             edtDate.setText(date);
         };
 
+        //Обработчик нажатия на кнопку "Далее"
         btnNext.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
             builder.setTitle(getString(R.string.coworking_equipment_ask));

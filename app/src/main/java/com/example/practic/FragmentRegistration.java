@@ -48,6 +48,7 @@ public class FragmentRegistration extends Fragment {
         return thisView;
     }
 
+    //Метод инициализации полей
     private void initFields(View thisView) {
         edtEmail          = thisView.findViewById(R.id.editText_Email);
         edtPassword       = thisView.findViewById(R.id.editText_Password);
@@ -63,12 +64,14 @@ public class FragmentRegistration extends Fragment {
         btnSignUp         = thisView.findViewById(R.id.button_SingUp);
     }
 
+    //Метод инициализации адаптеров
     private void initAdapters(View thisView) {
         Calendar calendar = Calendar.getInstance();
         final int year  = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day   = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //Обработчик который вызывает выбор даты
         edtBirthDate.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(thisView.getContext(),
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -76,22 +79,26 @@ public class FragmentRegistration extends Fragment {
             datePickerDialog.show();
         });
 
+        //Обработчик меняет дату в текстовом поле
         dateSetListener = (datePicker, year_, month_, day_) -> {
             month_++;
             String date = day_ + "/" + month_ + "/" + year_;
             edtBirthDate.setText(date);
         };
 
+        //Адаптер для поля пола
         ArrayAdapter<String> adapter = new ArrayAdapter<>(thisView.getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.genders));
         menuGender.setAdapter(adapter);
 
+        //Адаптер для поля семейного статуса
         adapter = new ArrayAdapter<>(thisView.getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.marital_status));
         menuMaritalStatus.setAdapter(adapter);
 
+        //Адаптер для кнопки регистрации
         btnSignUp.setOnClickListener(view -> {
             if (!registration()) {
                 Toast.makeText(getContext(), "Регистрация не удалась!", Toast.LENGTH_LONG).show();
@@ -109,6 +116,7 @@ public class FragmentRegistration extends Fragment {
                     .commit();
         });
 
+        //Адаптер для перехода на форму входа
         tvSignIn.setOnClickListener(view -> getParentFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
 
-
         boolean hasVisited = appPref.getBoolean("hasVisited", false);
-        //bottomNavigationView.setVisibility(View.GONE);
         if (!hasVisited) {
             String email    = appPref.getString("email", "");
             String password = appPref.getString("password", ":");
@@ -41,20 +40,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
+        bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
                             loadFragment(FragmentLenta.newInstance());
+                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                         case R.id.page_coworking:
                             loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
+                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                         case R.id.page_personalArea:
                             loadFragment(FragmentAccount.newInstance());
+                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                     }

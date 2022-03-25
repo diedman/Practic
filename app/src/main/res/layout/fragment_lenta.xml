@@ -40,6 +40,9 @@
             android:layout_height="50dp"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeTextType="uniform"
             android:hint="@string/coworking_choose"
             android:inputType="none"
             android:textSize="15sp" />

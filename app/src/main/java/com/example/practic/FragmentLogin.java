@@ -33,6 +33,7 @@ public class FragmentLogin extends Fragment {
         return thisView;
     }
 
+    //Метод инициализации полей
     private void initFields(View thisView) {
         edtEmail         = thisView.findViewById(R.id.editText_Email);
         edtPassword      = thisView.findViewById(R.id.editText_Password);
@@ -41,7 +42,9 @@ public class FragmentLogin extends Fragment {
         btnSignIn        = thisView.findViewById(R.id.button_SingIn);
     }
 
+    //Метод инициализации адаптеров
     private void initAdapters() {
+        //Обработчик кнопки входа в аккаунт
         btnSignIn.setOnClickListener(view -> {
             if (!authenticate()) {
                 Toast.makeText(getContext(), "Авторизация не удалась!", Toast.LENGTH_LONG).show();
@@ -59,6 +62,7 @@ public class FragmentLogin extends Fragment {
                     .commit();
         });
 
+        //Адаптер для перехода на форму регистрации
         tvSignUp.setOnClickListener(view -> getParentFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)

@@ -30,18 +30,21 @@ public class FragmentRegistrationEvent extends Fragment {
         return thisView;
     }
 
+    //
     private void initAdapters() {
         //TODO! Проинициализировать адаптеры
     }
 
+    //Метод инициализации полей
     private void initFields(View thisView) {
         mtvTitle       = thisView.findViewById(R.id.textView_reg_event_name);
         mtvDate        = thisView.findViewById(R.id.textView_reg_event_date);
         mtvPlace       = thisView.findViewById(R.id.textView_reg_event_place);
-        svDescription = thisView.findViewById(R.id.scrollView_reg_event_description);
+        svDescription  = thisView.findViewById(R.id.scrollView_reg_event_description);
         mtvSpeaker     = thisView.findViewById(R.id.textView_reg_event_speaker);
     }
 
+    //Создание QR-кода
     private Bitmap registrationOnEvent() {
         String strqr = Utilities.getRandomHexStr(32);
         DBCommunication.registerOnEvent(eventData.getId(), CoworkerData.id, strqr);

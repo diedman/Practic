@@ -21,7 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="6dp"
-            android:text="Tittle"
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeTextType="uniform"
+            android:text="Title"
             android:textColor="@color/gray"
             android:textSize="30sp" />
 
@@ -39,6 +42,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
+            android:autoSizeMaxTextSize="23sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeTextType="uniform"
             android:text="Date"
             android:textColor="@color/gray"
             android:textSize="23sp" />
