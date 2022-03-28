@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DBCommunication {
@@ -82,17 +84,23 @@ public class DBCommunication {
         return res;
     }
 
-    public static int isAlreadyRegisteredOnCoworking(int idSpace, int idCoworker) {
+    private static int deleteRegistrationIfExists(int idSpace, int idCoworker, Date regDate) {
         int res = -1;
         try {
-            String query = "SELECT * FROM coworkers_spaces WHERE (id_space = ?) AND (id_cowoker = ?);";
+            clearTools(idCoworker, idSpace);
+            Date dateAfterRegDate = addDays(regDate, 1);
+            String query = "DELETE FROM coworkers_spaces \n" +
+                    "WHERE (id_space = ?) AND (id_coworker >= ?) AND " +
+                    "(start_session >= ?) AND (start_session < ?);";
             PreparedStatement stmt = conn.prepareStatement(query);
 
             stmt.setInt(1, idSpace);
             stmt.setInt(2, idCoworker);
+            stmt.setDate(3, regDate);
+            stmt.setDate(4, dateAfterRegDate);
 
-            ResultSet rs = stmt.executeQuery();
-            res = rs.next() ? 1 : 0;
+            stmt.executeUpdate();
+            res = 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,19 +110,15 @@ public class DBCommunication {
     public static int registerOnCoworking(int idSpace,
                                           int idCoworker,
                                           String qr,
-                                          Date startSession,
-                                          Date endSession,
+                                          Timestamp startSessionTimestamp,
+                                          Timestamp endSessionTimestamp,
                                           String purposeName,
                                           String[] tools) {
         int res = -1;
         try {
-            int checkRes = isAlreadyRegisteredOnCoworking(idSpace, idCoworker);
-            if (checkRes != 0) {
-                if (checkRes == 1) {
-                    return 0;
-                } else {
-                    return -1;
-                }
+            int delRes = deleteRegistrationIfExists(idSpace, idCoworker, new Date(startSessionTimestamp.getTime()));
+            if (delRes == -1) {
+                return -1;
             }
             String query = "INSERT INTO coworkers_spaces (id_space, id_coworker, qr, " +
                             "start_session, end_session, id_purpose) \n" +
@@ -127,8 +131,8 @@ public class DBCommunication {
             stmt.setInt(1, idSpace);
             stmt.setInt(2, idCoworker);
             stmt.setString(3, qr);
-            stmt.setDate(4, startSession);
-            stmt.setDate(5, endSession);
+            stmt.setTimestamp(4, startSessionTimestamp);
+            stmt.setTimestamp(5, endSessionTimestamp);
             stmt.setInt(6, IdPurpose);
 
             stmt.executeUpdate();
@@ -251,6 +255,59 @@ public class DBCommunication {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public static int getSpacesQuantity(int spaceId) {
+        int res = 0;
+        try {
+            String query = "SELECT seats FROM spaces WHERE id = ?;";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, spaceId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    public static int getFreeSpacesQuantity(int spaceId, Timestamp startSessionTimestamp, Timestamp endSessionTimestamp) {
+        int res = 0;
+        try {
+            String query = "SELECT COUNT(*) FROM coworkers_spaces\n" +
+                           "WHERE ((start_session <= ? AND end_session >  ?) OR \n" +
+                                  "(start_session <  ? AND end_session >= ?) OR\n" +
+                                  "(start_session <= ? AND end_session >= ?) OR\n" +
+                                  "(start_session >= ? AND end_session <= ?)) AND\n" +
+                                  "(id_space = ?);";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setTimestamp(1, startSessionTimestamp);
+            stmt.setTimestamp(2, startSessionTimestamp);
+            stmt.setTimestamp(3, endSessionTimestamp);
+            stmt.setTimestamp(4, endSessionTimestamp);
+            stmt.setTimestamp(5, startSessionTimestamp);
+            stmt.setTimestamp(6, endSessionTimestamp);
+            stmt.setTimestamp(7, startSessionTimestamp);
+            stmt.setTimestamp(8, endSessionTimestamp);
+            stmt.setInt(9, spaceId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return getSpacesQuantity(spaceId) - res;
     }
 
     public static CoworkingSpace getCoworkingSpace(int spaceId) {
@@ -392,12 +449,13 @@ public class DBCommunication {
         return events;
     }
 
-    public static List<EventData> getEventsOfCoworker(int coworkerId) {
-        List<EventData> events = new ArrayList<>();
+    public static List<CoworkerEvent> getEventsOfCoworker(int coworkerId) {
+        List<CoworkerEvent> events = new ArrayList<>();
         try {
-            String query = "SELECT id, title, event_descr, meeting_date, speaker FROM events WHERE id IN (\n" +
-                    "SELECT id_event FROM coworkers_events WHERE id_coworker = ?" +
-                    "\n);";
+            String query = "SELECT events.id, events.title, events.event_descr, events.meeting_date, " +
+                    "events.speaker, events.id_space, coworkers_events.qr\n" +
+                    "FROM events, coworkers_events \n" +
+                    "WHERE (events.id = coworkers_events.id_event) AND (coworkers_events.id_coworker = ?);";
 
             PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -411,10 +469,12 @@ public class DBCommunication {
                 Date   date       = rs.getDate(4);
                 String speaker    = rs.getString(5);
                 int    spaceId    = rs.getInt(6);
+                String qr         = rs.getString(7);
 
                 CoworkingSpace space = getCoworkingSpace(spaceId);
+                EventData eventData = new EventData(id, title, eventDescr, date, speaker, space);
 
-                events.add(new EventData(id, title, eventDescr, date, speaker, space));
+                events.add(new CoworkerEvent(eventData, qr));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -521,6 +581,15 @@ public class DBCommunication {
         return getId("purposes", purposeName);
     }
 
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+        java.util.Date newDate = cal.getTime();
+        return new java.sql.Date(newDate.getTime());
+    }
+
     private static int getMaritalStatusId(String maritalStatusName) {
         return getId("marital_statuses", maritalStatusName);
     }
@@ -545,6 +614,25 @@ public class DBCommunication {
             e.printStackTrace();
         }
         return id;
+    }
+
+    private static int clearTools(int idCoworker, int idSpace) {
+        int res = -1;
+        try {
+            String query = "DELETE FROM session_tools \n" +
+                    "WHERE (id_coworker = ?) AND (id_space = ?);";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, idCoworker);
+            stmt.setInt(2, idSpace);
+
+            stmt.executeUpdate();
+            res = 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     private static int clearTools(int idCoworker, int idSpace, String[] tools) {

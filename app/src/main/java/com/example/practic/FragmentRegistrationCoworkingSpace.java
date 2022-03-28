@@ -16,7 +16,9 @@ import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
-import java.sql.Date;
+import com.google.android.material.textview.MaterialTextView;
+
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class FragmentRegistrationCoworkingSpace extends Fragment {
     int hour, minute;
     int chosenSpaceId;
+    int freeSpacesQuantity;
     String chosenDate;
     String chosenStartTime;
     String chosenEndTime;
@@ -38,7 +41,14 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
     TimePickerDialog.OnTimeSetListener timeSetListener;
     DatePickerDialog.OnDateSetListener dateSetListener;
     EditText edtDate, edtStartTime, edtEndTime;
+    MaterialTextView mtvSpacesInfo, mtvFreeSpacesInfo;
     AutoCompleteTextView menuCoworking;
+
+    enum RegistrationResults {
+        OK,
+        NO_SPACES,
+        NO_CONNECTION
+    }
 
     public static FragmentRegistrationCoworkingSpace newInstance() {
         return new FragmentRegistrationCoworkingSpace();
@@ -57,23 +67,34 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         return thisView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setFreeSpaces();
+    }
+
     //Метод инициализации полей
     private void initFields(View thisView) {
-        edtDate       = thisView.findViewById(R.id.editText_Date);
-        edtStartTime  = thisView.findViewById(R.id.editText_Start_Time);
-        edtEndTime    = thisView.findViewById(R.id.editText_End_Time);
-        btnNext       = thisView.findViewById(R.id.button_Next);
-        menuCoworking = thisView.findViewById(R.id.autoCompleteTextView_Coworking_Registration);
-        rgPurposes    = thisView.findViewById(R.id.radiogroup_Purpose);
+        edtDate           = thisView.findViewById(R.id.editText_Date);
+        edtStartTime      = thisView.findViewById(R.id.editText_Start_Time);
+        edtEndTime        = thisView.findViewById(R.id.editText_End_Time);
+        mtvSpacesInfo     = thisView.findViewById(R.id.textView_Spaces_Information);
+        mtvFreeSpacesInfo = thisView.findViewById(R.id.textView_Free_Spaces_Information);
+        btnNext           = thisView.findViewById(R.id.button_Next);
+        menuCoworking     = thisView.findViewById(R.id.autoCompleteTextView_Coworking_Registration);
+        rgPurposes        = thisView.findViewById(R.id.radiogroup_Purpose);
     }
 
     //Метод установки обработчика на поле для вывода выбора времени
     private void setTimeListener(EditText editText, View thisView, String title) {
         editText.setOnClickListener(view -> {
 
-            timeSetListener = ((timePicker, hour_, minute_) ->
-                    editText.setText(String.format(Locale.getDefault(),
-                        "%02d:%02d", hour_, minute_)));
+            timeSetListener = ((timePicker, hour_, minute_) -> {
+                editText.setText(String.format(Locale.getDefault(),
+                    "%02d:%02d", hour_, minute_));
+                setFreeSpaces();
+            });
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(thisView.getContext(),
                     timeSetListener, hour, minute, true);
@@ -99,12 +120,19 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         //Обработчик изменения даты в поле
         dateSetListener = (datePicker, year_, month_, day_) -> {
             month_++;
-            String date = day_ + "/" + month_ + "/" + year_;
+            String date = String.format(Locale.getDefault(), "%02d/%02d/%04d", day_, month_, year_);
+            chosenDate = date;
             edtDate.setText(date);
+
+            setFreeSpaces();
         };
 
         //Обработчик нажатия на кнопку "Далее"
         btnNext.setOnClickListener(view -> {
+            if (freeSpacesQuantity < 1) {
+                showResInfoDialog(thisView, RegistrationResults.NO_SPACES);
+                return;
+            }
             chosenDate      = edtDate.getText().toString();
             chosenStartTime = edtStartTime.getText().toString();
             chosenEndTime   = edtEndTime.getText().toString();
@@ -118,10 +146,9 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(thisView.getContext());
-            AtomicReference<String> resMessage = null;
+            AtomicReference<String> resMessage = new AtomicReference<>();
             builder.setTitle(getString(R.string.coworking_equipment_ask));
 
-            // TODO: Подавать значения из базы
             List<String> toolsList = DBCommunication.getTools();//{"ноутбук1", "ноутбук2", "ноутбук3", "ноутбук4", "ноутбук5"};
             String[] tools = new String[toolsList.size()];
             toolsList.toArray(tools);
@@ -144,25 +171,21 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
 
                         int res = registerOnCoworking(checkedTools);
                         if (res == 1) {
-                            resMessage.set("Регистрация прошла успешно!");
-                        } else if (res == 0) {
-                            resMessage.set("Вы уже зарегистрированы!");
+                            showResInfoDialog(thisView, RegistrationResults.OK);
                         } else {
-                            resMessage.set("Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!");
+                            showResInfoDialog(thisView, RegistrationResults.NO_CONNECTION);
                         }
+
                     });
 
             builder.setNegativeButton(R.string.coworking_equipment_dialog_no,
                     (dialogInterface, listener) -> {
                         int res = registerOnCoworking(new String[0]);
                         if (res == 1) {
-                            resMessage.set("Регистрация прошла успешно!");
-                        } else if (res == 0) {
-                            resMessage.set("Вы уже зарегистрированы!");
+                            showResInfoDialog(thisView, RegistrationResults.OK);
                         } else {
-                            resMessage.set("Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!");
+                            showResInfoDialog(thisView, RegistrationResults.NO_CONNECTION);
                         }
-
 //                        builder.setTitle(resMessage.get());
 //                        dialog = builder.
                     });
@@ -185,15 +208,44 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
                 android.R.layout.simple_spinner_dropdown_item, titles);
         menuCoworking.setAdapter(menuAdapter);
 
-        menuCoworking.setOnItemClickListener((adapterView, view, i, l) -> chosenSpaceId = spaces.get(i).getId());
+        menuCoworking.setOnItemClickListener((adapterView, view, i, l) -> {
+            chosenSpaceId = spaces.get(i).getId();
+
+            String spaceQuantity = String.valueOf(DBCommunication.getSpacesQuantity(chosenSpaceId));
+            mtvSpacesInfo.setText(spaceQuantity);
+            setFreeSpaces();
+        });
+    }
+
+    private void setFreeSpaces() {
+        String coworking = menuCoworking.getText().toString().trim();
+
+        chosenDate      = edtDate.getText().toString().trim();
+        chosenStartTime = edtStartTime.getText().toString().trim();
+        chosenEndTime   = edtEndTime.getText().toString().trim();
+
+        if (!coworking.isEmpty() && !chosenDate.isEmpty() && !chosenStartTime.isEmpty() && !chosenEndTime.isEmpty()) {
+            Timestamp startSessionDateTime = null, endSessionDateTime = null;
+            try {
+                startSessionDateTime = new Timestamp(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+                        .parse(chosenStartTime + " " + chosenDate)).getTime());
+                endSessionDateTime = new Timestamp(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+                        .parse(chosenEndTime + " " + chosenDate)).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            freeSpacesQuantity = DBCommunication.getFreeSpacesQuantity(chosenSpaceId, startSessionDateTime, endSessionDateTime);
+            mtvFreeSpacesInfo.setText(String.valueOf(freeSpacesQuantity));
+        }
     }
 
     private int registerOnCoworking(String[] tools) {
-        Date startDateTime = null, endDateTime = null;
+        Timestamp startDateTime = null, endDateTime = null;
         try {
-             startDateTime = new Date(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+             startDateTime = new Timestamp(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
                     .parse(chosenStartTime + " " + chosenDate)).getTime());
-             endDateTime = new Date(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
+             endDateTime = new Timestamp(Objects.requireNonNull(new SimpleDateFormat("hh:mm dd/MM/yyyy")
                      .parse(chosenEndTime + " " + chosenDate)).getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -202,5 +254,31 @@ public class FragmentRegistrationCoworkingSpace extends Fragment {
         String strqr = Utilities.getRandomHexStr(64);
         return DBCommunication.registerOnCoworking(chosenSpaceId, CoworkerData.id, strqr,
                                                    startDateTime, endDateTime, chosenPurpose, tools);
+    }
+
+    private void showResInfoDialog(View view, RegistrationResults rr) {
+        switch (rr) {
+            case OK:
+                showDialog(view, "Вы зарегистрировались!", "Приходите " + chosenDate + " к " + chosenStartTime + " на коворкинг по адресу " + menuCoworking.getText().toString() + ".");
+                break;
+
+            case NO_SPACES:
+                showDialog(view, "Свободных мест нет!", "Попробуйте выбрать другую дату или время.");
+                break;
+
+            case NO_CONNECTION:
+                showDialog(view, "Что-то пошло не так!", "Регистрация не удалась! Проверьте подключение интернету.");
+                break;
+        }
+    }
+
+    private void showDialog(View view, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", (dialogInterface, i) -> {});
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

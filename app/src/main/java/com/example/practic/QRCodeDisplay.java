@@ -1,11 +1,13 @@
 package com.example.practic;
 
+import android.graphics.Bitmap;
+
 public class QRCodeDisplay {
     private String title, time, date, place, workplace, locker;
-    private int img;
+    private Bitmap img;
 
     public QRCodeDisplay(String title, String time, String date, String place, String workplace,
-                         String locker, int img) {
+                         String locker, Bitmap img) {
         this.title     = title;
         this.time      = time;
         this.date      = date;
@@ -57,10 +59,10 @@ public class QRCodeDisplay {
         this.locker = locker;
     }
 
-    public int getImg() {
+    public Bitmap getImg() {
         return img;
     }
-    public void setImg(int img) {
+    public void setImg(Bitmap img) {
         this.img = img;
     }
 }

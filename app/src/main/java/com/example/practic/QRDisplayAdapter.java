@@ -21,7 +21,7 @@ public class QRDisplayAdapter extends
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgQR;
-        public TextView tvTitle, tvTime, tvDate, tvWorkPlace, tvLocker;
+        public TextView tvTitle, tvTime, tvPlace, tvDate, tvWorkPlace, tvLocker;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -29,6 +29,7 @@ public class QRDisplayAdapter extends
             tvTitle     = itemView.findViewById(R.id.textView_QR_Name);
             tvTime      = itemView.findViewById(R.id.textView_QR_Time);
             tvDate      = itemView.findViewById(R.id.textView_QR_Date);
+            tvPlace     = itemView.findViewById(R.id.textView_QR_Place);
             tvWorkPlace = itemView.findViewById(R.id.textView_QR_Workplace);
             tvLocker    = itemView.findViewById(R.id.textView_QR_Locker);
         }
@@ -53,27 +54,30 @@ public class QRDisplayAdapter extends
         TextView title  = holder.tvTitle;
         TextView time   = holder.tvTime;
         TextView date   = holder.tvDate;
+        TextView place  = holder.tvPlace;
         TextView workPlace = holder.tvWorkPlace;
         TextView locker = holder.tvLocker;
 
-
-        imgQR.setImageResource(QR.getImg());
+        imgQR.setImageBitmap(QR.getImg());
         title.setText(QR.getTitle());
         time.setText(QR.getTime());
         date.setText(QR.getDate());
+
+        if (QR.getPlace() == null) place.setVisibility(View.GONE);
+        else place.setText(QR.getPlace());
+
         if (QR.getWorkplace() == null) workPlace.setVisibility(View.GONE);
         else workPlace.setText(QR.getWorkplace());
+
         if (QR.getLocker() == null) locker.setVisibility(View.GONE);
         else locker.setText(QR.getLocker());
 
-
         holder.imgQR.setOnClickListener(view -> {
-
             AlertDialog.Builder alertadd = new AlertDialog.Builder(view.getContext());
             LayoutInflater factory = LayoutInflater.from(view.getContext());
             final View dialogView = factory.inflate(R.layout.qr_enlarge_dialog, null);
             ImageView QRimg = dialogView.findViewById(R.id.imageview_dialog);
-            QRimg.setImageResource(QR.getImg());
+            QRimg.setImageBitmap(QR.getImg());
             alertadd.setView(dialogView);
             alertadd.show();
         });

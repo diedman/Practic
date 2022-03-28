@@ -12,7 +12,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -109,7 +108,7 @@ public class FragmentRegistration extends Fragment {
                 birthdate        = new java.sql.Date(Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy")
                         .parse(edtBirthDate.getText().toString())).getTime());
             } catch (ParseException e) {
-                Toast.makeText(getContext(), "Неверный формат даты!", Toast.LENGTH_LONG).show();
+                Utilities.showMessageDialog(thisView, "Неверный формат даты!", "Дата указана неверно!");
                 e.printStackTrace();
                 return;
             }
@@ -121,7 +120,7 @@ public class FragmentRegistration extends Fragment {
             if (firstname.equals("") || lastname.equals("") || password.equals("")
                     || email.equals("") || sex.equals("") || maritalStatus.equals(""))
             {
-                Toast.makeText(getContext(), "Не все обязательные поля заполнены!", Toast.LENGTH_SHORT).show();
+                Utilities.showMessageDialog(thisView, "Заполните все обязательные поля", "Не все обязательные поля заполнены!");
                 return;
             }
 
@@ -130,7 +129,7 @@ public class FragmentRegistration extends Fragment {
                     sex, maritalStatus) == 1;
 
             if (registerRes) {
-                Toast.makeText(getContext(), "Регистрация не удалась!", Toast.LENGTH_LONG).show();
+                Utilities.showMessageDialog(thisView, "Регистрация не удалась!", "");
                 return;
             }
 

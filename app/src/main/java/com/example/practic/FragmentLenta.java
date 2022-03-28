@@ -90,7 +90,7 @@ public class FragmentLenta extends Fragment {
         List<EventData> events = DBCommunication.getEvents();
 
         for (EventData event: events) {
-            posts.add(new LentaItem(R.drawable.noavatar, event));
+            posts.add(new LentaItem(R.drawable.default_event, event));
         }
 
         return posts;

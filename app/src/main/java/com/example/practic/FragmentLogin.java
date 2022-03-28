@@ -28,7 +28,7 @@ public class FragmentLogin extends Fragment {
         View thisView = inflater.inflate(R.layout.fragment_login, container, false);
 
         initFields(thisView);
-        initAdapters();
+        initAdapters(thisView);
 
         return thisView;
     }
@@ -43,7 +43,7 @@ public class FragmentLogin extends Fragment {
     }
 
     //Метод инициализации адаптеров
-    private void initAdapters() {
+    private void initAdapters(View thisView) {
         //Обработчик кнопки входа в аккаунт
         btnSignIn.setOnClickListener(view -> {
             String email    = edtEmail.getText().toString().trim();
@@ -57,7 +57,7 @@ public class FragmentLogin extends Fragment {
             boolean authenticationRes = DBCommunication.authenticateCoworker(email, password) == 1;
 
             if (!authenticationRes) {
-                Toast.makeText(getContext(), "Авторизация не удалась!", Toast.LENGTH_LONG).show();
+                Utilities.showMessageDialog(thisView, "Авторизация не удалась!", "");
                 return;
             }
 

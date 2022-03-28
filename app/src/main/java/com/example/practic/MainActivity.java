@@ -22,21 +22,6 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
-
-
-        String email    = appPref.getString("email", Utilities.getRandomHexStr(32));
-        String password = appPref.getString("password", Utilities.getRandomHexStr(32));
-
-        int isDataCorrect = DBCommunication.authenticateCoworker(email, password);
-
-        if (isDataCorrect != 1) {
-            appPref.edit().clear().apply();
-            loadFragment(FragmentLogin.newInstance());
-        } else {
-            loadFragment(FragmentLenta.newInstance());
-        }
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -60,6 +45,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 });
+
+        SharedPreferences appPref = getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
+
+        String email    = appPref.getString("email", Utilities.getRandomHexStr(32));
+        String password = appPref.getString("password", Utilities.getRandomHexStr(32));
+
+        int isDataCorrect = DBCommunication.authenticateCoworker(email, password);
+
+        if (isDataCorrect != 1) {
+            appPref.edit().clear().apply();
+            loadFragment(FragmentLogin.newInstance());
+        } else {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            loadFragment(FragmentLenta.newInstance());
+        }
     }
 
     private void loadFragment(Fragment fragment){

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -30,7 +29,7 @@ public class FragmentRegistrationEvent extends Fragment {
         View thisView = inflater.inflate(R.layout.fragment_registration_event, container, false);
 
         initFields(thisView);
-        initAdapters();
+        initAdapters(thisView);
 
         return thisView;
     }
@@ -54,15 +53,15 @@ public class FragmentRegistrationEvent extends Fragment {
         btnSignUp      = thisView.findViewById(R.id.button_reg_event_SingUp);
     }
 
-    private void initAdapters() {
+    private void initAdapters(View thisView) {
         btnSignUp.setOnClickListener(v -> {
             int regRes = registrationOnEvent();
             if (regRes == 1) {
-                Toast.makeText(getContext(), "Вы зарегистрировались на мероприятие!", Toast.LENGTH_SHORT).show();
+                Utilities.showMessageDialog(thisView, "Вы зарегистрировались на мероприятие!", "");
             } else if (regRes == 0) {
-                Toast.makeText(getContext(), "Вы уже зарегистрированы на это мероприятие!", Toast.LENGTH_SHORT).show();
+                Utilities.showMessageDialog(thisView, "Вы уже зарегистрированы на это мероприятие!", "");
             } else {
-                Toast.makeText(getContext(), "Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!", Toast.LENGTH_SHORT).show();
+                Utilities.showMessageDialog(thisView, "Соединение с сервером не установлено! Пожалуйста, проверьте подключение к интернету!", "");
             }
         });
     }

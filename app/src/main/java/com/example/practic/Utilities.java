@@ -1,5 +1,8 @@
 package com.example.practic;
 
+import android.app.AlertDialog;
+import android.view.View;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
@@ -20,5 +23,15 @@ public class Utilities {
         byte[] bytes = new byte[bytesLen];
         rnd.nextBytes(bytes);
         return bytesToHexStr(bytes);
+    }
+
+    public static void showMessageDialog(View view, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", (dialogInterface, i) -> {});
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -24,6 +24,22 @@ public class QRGen {
         this.strCode = strCode;
     }
 
+    public static Bitmap genQR(String strCode, int width, int heignt) {
+        Bitmap res = null;
+        try {
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+            BitMatrix bitMatrix = multiFormatWriter.encode(strCode, BarcodeFormat.QR_CODE, width, heignt);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            res = barcodeEncoder.createBitmap(bitMatrix);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static Bitmap genQR(String strCode) {
+        return genQR(strCode, 512, 512);
+    }
 
     public void generate(){
         try{
