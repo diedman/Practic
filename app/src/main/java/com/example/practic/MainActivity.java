@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     public static final String SHARED_DATA = "app_shared_data";
+    public static BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,24 +23,22 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setVisibility(View.GONE);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.page_news:
                             loadFragment(FragmentLenta.newInstance());
-                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                         case R.id.page_coworking:
                             loadFragment(FragmentRegistrationCoworkingSpace.newInstance());
-                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                         case R.id.page_personalArea:
                             loadFragment(FragmentAccount.newInstance());
-                            bottomNavigationView.setVisibility(View.VISIBLE);
                             item.setChecked(true);
                             break;
                     }
@@ -57,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             appPref.edit().clear().apply();
             loadFragment(FragmentLogin.newInstance());
         } else {
-            bottomNavigationView.setVisibility(View.VISIBLE);
             loadFragment(FragmentLenta.newInstance());
+            bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 

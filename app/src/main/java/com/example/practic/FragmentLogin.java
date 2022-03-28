@@ -66,6 +66,7 @@ public class FragmentLogin extends Fragment {
             appPref.edit().putString("email", email).apply();
             appPref.edit().putString("password", password).apply();
 
+            MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             getParentFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
