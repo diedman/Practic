@@ -136,50 +136,6 @@
                 android:textSize="15sp"
                 android:autoSizeTextType="uniform" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_Email_Edit2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:hint="@string/registration_email"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_First_Name_Edit2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:hint="@string/registration_first_name"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_Password_Edit2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:hint="@string/registration_password"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_Birthday_Edit2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="false"
-                android:hint="@string/registration_birth_date"
-                android:inputType="date"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_Last_Name_Edit2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:hint="@string/registration_last_name"
-                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
