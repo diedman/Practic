@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="8dp"
-                android:layout_weight="2"
+                android:layout_weight="2.5"
                 android:background="@color/light_gray"
                 android:src="@drawable/ic_speaker"
                 app:tint="@color/gray" />
@@ -58,7 +58,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="8dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1.4"
                 android:autoSizeMaxTextSize="20sp"
                 android:autoSizeMinTextSize="10sp"
                 android:autoSizeTextType="uniform"
@@ -113,7 +113,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="8dp"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:src="@drawable/ic_date"
                     app:tint="@color/white" />
 
@@ -140,7 +140,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="8dp"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1.4"
                     android:autoSizeMaxTextSize="24sp"
                     android:autoSizeMinTextSize="10sp"
                     android:autoSizeTextType="uniform"
@@ -165,7 +165,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="8dp"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:src="@drawable/ic_place"
                     app:tint="@color/white" />
 
@@ -192,7 +192,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="8dp"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1.4"
                     android:autoSizeMaxTextSize="24sp"
                     android:autoSizeMinTextSize="10sp"
                     android:autoSizeTextType="uniform"
