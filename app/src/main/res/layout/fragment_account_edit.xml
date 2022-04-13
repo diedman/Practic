@@ -129,12 +129,12 @@
                 android:layout_height="50dp"
                 android:autoSizeMaxTextSize="20sp"
                 android:autoSizeMinTextSize="10sp"
+                android:autoSizeTextType="uniform"
                 android:clickable="true"
                 android:focusable="false"
                 android:hint="@string/registration_birth_date"
                 android:inputType="date"
-                android:textSize="15sp"
-                android:autoSizeTextType="uniform" />
+                android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
