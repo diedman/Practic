@@ -103,15 +103,7 @@ public class FragmentRegistration extends Fragment {
             String firstname     = edtFirstname.getText().toString().trim();
             String lastname      = edtLastname.getText().toString().trim();
             String password      = edtPassword.getText().toString().trim();
-            Date birthdate;
-            try {
-                birthdate        = new java.sql.Date(Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy")
-                        .parse(edtBirthDate.getText().toString())).getTime());
-            } catch (ParseException e) {
-                Utilities.showMessageDialog(thisView, "Неверный формат даты!", "Дата указана неверно!");
-                e.printStackTrace();
-                return;
-            }
+
             String email         = edtEmail.getText().toString().trim();
             String phoneNum      = edtPhoneNum.getText().toString().trim();
             String sex           = menuGender.getText().toString().trim();
@@ -124,11 +116,21 @@ public class FragmentRegistration extends Fragment {
                 return;
             }
 
+            Date birthdate;
+            try {
+                birthdate        = new java.sql.Date(Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy")
+                        .parse(edtBirthDate.getText().toString())).getTime());
+            } catch (ParseException e) {
+                Utilities.showMessageDialog(thisView, "Неверный формат даты!", "Дата указана неверно!");
+                e.printStackTrace();
+                return;
+            }
+
             boolean registerRes = DBCommunication.registerCoworker(firstname, lastname, null,
                     password, birthdate, email, phoneNum,
                     sex, maritalStatus) == 1;
 
-            if (registerRes) {
+            if (!registerRes) {
                 Utilities.showMessageDialog(thisView, "Регистрация не удалась!", "");
                 return;
             }
@@ -138,6 +140,7 @@ public class FragmentRegistration extends Fragment {
             appPref.edit().putString("email", email).apply();
             appPref.edit().putString("password", password).apply();
 
+            MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
             getParentFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
