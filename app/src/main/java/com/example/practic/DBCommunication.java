@@ -81,6 +81,7 @@ public class DBCommunication {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return res;
     }
 

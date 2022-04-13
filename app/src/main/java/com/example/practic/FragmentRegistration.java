@@ -130,7 +130,7 @@ public class FragmentRegistration extends Fragment {
                     password, birthdate, email, phoneNum,
                     sex, maritalStatus) == 1;
 
-            if (registerRes) {
+            if (!registerRes) {
                 Utilities.showMessageDialog(thisView, "Регистрация не удалась!", "");
                 return;
             }
