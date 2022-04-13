@@ -10,14 +10,14 @@ public class DBUtil{
     private static String dbName         = "Practic";
     private static final String USERNAME = "dedman";
     private static final String PASSWORD = "Hdleo#-Yeb45";
-    static{
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    static{
+//        try{
+//            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static Connection changeDatabase(String newDBName) {
         dbName = newDBName;

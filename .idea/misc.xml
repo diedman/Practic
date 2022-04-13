@@ -43,13 +43,13 @@
         <entry key="..\:/Users/Sinus/Desktop/Practic1/app/src/main/res/layout/recyclerview_lenta_item.xml" value="0.4696557971014493" />
         <entry key="..\:/Users/Sinus/Desktop/Practic1/app/src/main/res/menu/bottom_menu.xml" value="0.5541666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2758152173913043" />
-        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.22871376811594202" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.7056778679026651" />
         <entry key="app/src/main/res/layout/fragment_account_edit.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_lenta.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.4" />
         <entry key="app/src/main/res/layout/fragment_registration_coworking_space.xml" value="0.2758152173913043" />
-        <entry key="app/src/main/res/layout/fragment_registration_event.xml" value="0.2758152173913043" />
+        <entry key="app/src/main/res/layout/fragment_registration_event.xml" value="0.6" />
         <entry key="app/src/main/res/layout/qr_enlarge_dialog.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/recyclerview_lenta_item.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/layout/recyclerview_qr_item.xml" value="0.2758152173913043" />

@@ -368,9 +368,12 @@ public class DBCommunication {
                     "spaces.locality, spaces.seats \n" +
                     "FROM coworkers_spaces, spaces, purposes \n" +
                     "WHERE (spaces.id = coworkers_spaces.id_space) " +
-                    "AND (purposes.id = coworkers_spaces.id_purpose);";
+                    "AND (purposes.id = coworkers_spaces.id_purpose)" +
+                    "AND (coworkers_spaces.id_coworker = ?);";
 
             PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setInt(1, coworkerId);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
